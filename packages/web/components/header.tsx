@@ -84,18 +84,16 @@ const Header: React.FC = () => {
 			<nav css={navigation(isOpen)}>
 				<ul>
 					<li>
-						<Link to="/butikk" prefetch>
-							Butikk
-						</Link>
+						<Link to="/store">Butikk</Link>
 					</li>
 					<li>
-						<Link to="/">Hva er Plenny Shake?</Link>
+						<Link to="/what">Hva er Plenny Shake?</Link>
 					</li>
 					<li>
-						<Link to="/">Blogg</Link>
+						<Link to="/blog">Blogg</Link>
 					</li>
 					<li>
-						<Link to="/">Om Oss</Link>
+						<Link to="/about">Om Oss</Link>
 					</li>
 				</ul>
 			</nav>

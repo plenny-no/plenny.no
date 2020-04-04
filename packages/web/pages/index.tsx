@@ -5,7 +5,7 @@ import { css } from "@emotion/core";
 const Home = () => (
 	<>
 		<Head>
-			<title>Plenny.no</title>
+			<title>Hjem | Plenny.no</title>
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<h1

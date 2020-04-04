@@ -2,10 +2,10 @@ import React from "react";
 import Head from "next/head";
 import { css } from "@emotion/core";
 
-const Home = () => (
+const FourOhFour = () => (
 	<>
 		<Head>
-			<title>Plenny.no</title>
+			<title>404 | Plenny.no</title>
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<h1
@@ -14,11 +14,14 @@ const Home = () => (
 				font-size: 2rem;
 			`}
 		>
-			Butikken er ikke klar enda, men den kommer snart!
+			Siden du prøvde å gå til finnes ikke... enda!
 		</h1>
 
-		<p>Her kommer det en fresh nettbutikk om ikke lenge ✨</p>
+		<p>
+			Denne siden er under konstruksjon 🏗, så kom tilbake senere, kanskje den
+			finnes da
+		</p>
 	</>
 );
 
-export default Home;
+export default FourOhFour;
