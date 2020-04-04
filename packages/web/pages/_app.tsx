@@ -3,13 +3,18 @@ import { AppProps } from "next/app";
 
 import "normalize.css";
 import "../global-styles.css";
+import Header from "../components/header";
 
-const App = (props: AppProps) => {
+const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
 
 	return (
 		<>
-			<Component {...pageProps} />
+			<Header />
+			<main>
+				<Component {...pageProps} />
+			</main>
+			<footer>PLENNY ANS</footer>
 		</>
 	);
 };
