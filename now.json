@@ -1,26 +1,17 @@
 {
   "name": "plenny",
   "version": 2,
+  "alias": ["plenny.no"],
+
   "builds": [
     { "src": "packages/web/package.json", "use": "@now/next" },
     { "src": "packages/sanity/package.json", "use": "@now/static-build" }
   ],
+  
   "routes": [
-    {
-      "src": "/sanity",
-      "dest": "/packages/sanity/"
-    },
-    {
-      "src": "/sanity/(.*)",
-      "dest": "/packages/sanity/$1"
-    },
-    {
-      "src": "/sanity/(.*)",
-      "dest": "/packages/sanity/"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/packages/web/$1"
-    }
+    { "src": "^/sanity/static/(.*)", "dest": "/packages/sanity/static/$1" },
+    { "src": "^/sanity/(.*)", "dest": "/packages/sanity/index.html" },
+    { "src": "^/sanity", "dest": "/packages/sanity/index.html" },
+    { "src": "/(.*)", "dest": "/packages/web/$1" }
   ]
 }
