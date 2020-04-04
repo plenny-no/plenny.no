@@ -1,0 +1,8 @@
+{
+    "name": "plenny-sanity",
+    "version": 2,
+    "builds": [
+      { "src": "packages/sanity/package.json", "use": "@now/static-build" }
+    ]
+  }
+  
