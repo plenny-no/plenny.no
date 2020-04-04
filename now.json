@@ -1,0 +1,21 @@
+{
+    "name": "plenny",
+    "version": 2,
+    "builds": [
+        { "src": "packages/web/package.json", "use": "@now/next" },
+        { "src": "packages/sanity/package.json", "use": "@now/static-build" }
+    ],
+    "routes": [
+        {
+          "src": "/sanity/(.*)",
+          "dest": "/packages/sanity/$1"
+        },
+        {
+          "src": "/(.*)",
+          "dest": "/packages/web/$1",
+          "headers": {
+            "x-request-path": "$1"
+          }
+        }
+    ]
+}
