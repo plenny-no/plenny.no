@@ -7,6 +7,10 @@
     ],
     "routes": [
         {
+            "src": "/sanity",
+            "dest": "/packages/sanity/"
+        },
+        {
           "src": "/sanity/(.*)",
           "dest": "/packages/sanity/$1"
         },

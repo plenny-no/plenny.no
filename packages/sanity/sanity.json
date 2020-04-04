@@ -1,7 +1,8 @@
 {
   "root": true,
   "project": {
-    "name": "plenny.no"
+    "name": "plenny.no",
+    "basePath": "/sanity"
   },
   "api": {
     "projectId": "bxtjfvg8",
