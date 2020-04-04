@@ -2,9 +2,16 @@ import React from "react";
 import { css } from "@emotion/core";
 import Button from "./button";
 import Link from "./link";
+import { Router } from "next/dist/client/router";
+
+const container = css`
+	background-color: bisque;
+`;
 
 const header = css`
 	position: relative;
+	max-width: 800px;
+	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -55,8 +62,20 @@ const Header: React.FC = () => {
 	const [isOpen, setOpen] = React.useState(false);
 	const toggleOpen = () => setOpen((current) => !current);
 
+	React.useEffect(() => {
+		const handleRouteChange = () => {
+			setOpen(false);
+		};
+
+		Router.events.on("routeChangeStart", handleRouteChange);
+
+		return () => {
+			Router.events.off("routeChangeStart", handleRouteChange);
+		};
+	}, []);
+
 	return (
-		<header>
+		<header css={container}>
 			<section css={header}>
 				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
 				<span css={logo}>Plenny</span>
@@ -65,16 +84,18 @@ const Header: React.FC = () => {
 			<nav css={navigation(isOpen)}>
 				<ul>
 					<li>
-						<Link href="/">Butikk</Link>
+						<Link to="/butikk" prefetch>
+							Butikk
+						</Link>
 					</li>
 					<li>
-						<Link href="/">Hva er Plenny Shake?</Link>
+						<Link to="/">Hva er Plenny Shake?</Link>
 					</li>
 					<li>
-						<Link href="/">Blogg</Link>
+						<Link to="/">Blogg</Link>
 					</li>
 					<li>
-						<Link href="/">Om Oss</Link>
+						<Link to="/">Om Oss</Link>
 					</li>
 				</ul>
 			</nav>

@@ -1,21 +1,44 @@
 import React from "react";
 import { AppProps } from "next/app";
+import { css } from "@emotion/core";
+import Header from "../components/header";
 
 import "normalize.css";
 import "../global-styles.css";
-import Header from "../components/header";
+
+const wrapper = css`
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+`;
+
+const main = css`
+	flex: 1;
+
+	max-width: 800px;
+	margin: 0 auto;
+`;
+
+const footer = css`
+	min-height: 200px;
+	background: firebrick;
+	color: floralwhite;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
 
 	return (
-		<>
+		<div css={wrapper}>
 			<Header />
-			<main>
+			<main css={main}>
 				<Component {...pageProps} />
 			</main>
-			<footer>PLENNY ANS</footer>
-		</>
+			<footer css={footer}>PLENNY ANS</footer>
+		</div>
 	);
 };
 
