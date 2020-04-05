@@ -6,6 +6,7 @@ class CustomDocument extends Document {
 		return (
 			<Html lang="en">
 				<Head>
+					<script src="https://wchat.freshchat.com/js/widget.js" />
 					<link
 						rel="preload"
 						href="/fonts/montserrat-v14-latin-700.woff"

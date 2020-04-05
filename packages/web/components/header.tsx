@@ -1,8 +1,9 @@
 import React from "react";
 import { css } from "@emotion/core";
+import { Router } from "next/dist/client/router";
+import { FaShoppingCart } from "react-icons/fa";
 import Button from "./button";
 import Link from "./link";
-import { Router } from "next/dist/client/router";
 
 const container = css`
 	background-color: bisque;
@@ -79,7 +80,9 @@ const Header: React.FC = () => {
 			<section css={header}>
 				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
 				<span css={logo}>Plenny</span>
-				<Button>🛒</Button>
+				<Button>
+					<FaShoppingCart />
+				</Button>
 			</section>
 			<nav css={navigation(isOpen)}>
 				<ul>

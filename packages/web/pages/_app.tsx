@@ -32,6 +32,16 @@ const footer = css`
 const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
 
+	React.useEffect(() => {
+		if (typeof window !== "undefined") {
+			window.fcWidget.init({
+				token: "dfd50623-26da-4e18-b085-fb45217598e2",
+				host: "https://wchat.eu.freshchat.com",
+				locale: "nb",
+			});
+		}
+	}, []);
+
 	return (
 		<div css={wrapper}>
 			<Header />
