@@ -2,6 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import { css } from "@emotion/core";
 import Header from "../components/header";
+import initLiveChat from "../utils/live-chat";
 
 import "normalize.css";
 import "../global-styles.css";
@@ -34,11 +35,7 @@ const App: React.FC<AppProps> = (props) => {
 
 	React.useEffect(() => {
 		if (typeof window !== "undefined") {
-			window.fcWidget.init({
-				token: "dfd50623-26da-4e18-b085-fb45217598e2",
-				host: "https://wchat.eu.freshchat.com",
-				locale: "nb",
-			});
+			initLiveChat(11844885);
 		}
 	}, []);
 
