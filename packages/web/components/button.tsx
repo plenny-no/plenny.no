@@ -1,6 +1,5 @@
 import React from "react";
 import { css } from "@emotion/core";
-import { lighten } from "polished";
 
 type Props = {
 	primary?: boolean;
@@ -19,7 +18,6 @@ const regularButton = css`
 	:focus,
 	:hover {
 		outline: solid;
-		color: ${lighten(0.15)("firebrick")};
 	}
 `;
 
