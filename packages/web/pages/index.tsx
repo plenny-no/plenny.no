@@ -6,7 +6,6 @@ const Home = () => (
 	<>
 		<Head>
 			<title>Hjem | Plenny.no</title>
-			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<h1
 			css={css`
