@@ -1,5 +1,6 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import IntercomScripts from "../utils/intercom-scripts";
 
 class CustomDocument extends Document {
 	render() {
@@ -92,6 +93,7 @@ class CustomDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
+					<IntercomScripts appId="wgq0tvgl" />
 				</body>
 			</Html>
 		);

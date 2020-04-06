@@ -3,7 +3,6 @@ import { AppProps } from "next/app";
 import { css } from "@emotion/core";
 import Header from "../components/header";
 // import initLiveChat from "../utils/live-chat";
-import intercom from "../utils/intercom";
 
 import "normalize.css";
 import "../global-styles.css";
@@ -33,12 +32,6 @@ const footer = css`
 
 const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
-
-	React.useEffect(() => {
-		if (typeof window !== "undefined") {
-			intercom();
-		}
-	}, []);
 
 	return (
 		<div css={wrapper}>
