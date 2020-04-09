@@ -1,6 +1,5 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import IntercomScripts from "../utils/intercom-scripts";
 
 class CustomDocument extends Document {
 	render() {
@@ -28,7 +27,6 @@ class CustomDocument extends Document {
 					<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b22222" />
 					<meta name="msapplication-TileColor" content="#da532c" />
 					<meta name="theme-color" content="#ffffff" />
-					<script src="https://wchat.freshchat.com/js/widget.js" />
 					<link
 						rel="preload"
 						href="/fonts/montserrat-v14-latin-700.woff"
@@ -93,7 +91,6 @@ class CustomDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					<IntercomScripts appId="wgq0tvgl" />
 				</body>
 			</Html>
 		);
