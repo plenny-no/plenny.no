@@ -5,8 +5,9 @@ import Link from "../link";
 import { SanityCallToAction } from "../../sanity/models";
 import { urlFor } from "../../sanity";
 
-const wrapper = css`
+const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 	display: flex;
+	flex-direction: ${alignment === "right" ? "row-reverse" : "row"};
 	max-width: 1000px;
 	margin: 0 auto;
 	justify-content: space-between;
@@ -26,14 +27,14 @@ const image = css`
 	height: auto;
 `;
 
-const text = css`
+const text = (alignment: SanityCallToAction["imageAlignment"]) => css`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
 
 	@media (min-width: 750px) {
-		padding-left: 2rem;
+		padding: ${alignment === "right" ? "0 2rem 0 0" : "0 0 0 2rem"};
 	}
 
 	& > h2 {
@@ -51,14 +52,16 @@ const CallToAction: React.FC<Props> = (props) => {
 	const imageUrl = urlFor(content.image).maxWidth(500).url() || "";
 
 	return (
-		<article css={wrapper}>
+		<article css={wrapper(content.imageAlignment)}>
 			<div>
 				<img css={image} src={imageUrl} />
 			</div>
-			<section css={text}>
+			<section css={text(content.imageAlignment)}>
 				<h2>{content.title}</h2>
 				<BlockContentToReact blocks={content.text} />
-				<Link to={content.link.url}>{content.link.title}</Link>
+				{content.link && (
+					<Link to={content.link.url}>{content.link.title}</Link>
+				)}
 			</section>
 		</article>
 	);

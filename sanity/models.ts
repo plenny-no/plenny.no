@@ -77,7 +77,8 @@ export type SanityCallToAction = SanityObject<
 		title: string;
 		text: SanityObjectArray<SanityBlockContent>;
 		image: SanityReference;
-		link: SanityLink;
+		link?: SanityLink;
+		imageAlignment: "left" | "right";
 	}
 >;
 
