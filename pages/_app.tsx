@@ -61,12 +61,4 @@ const App: React.FC<AppProps> = (props) => {
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async (params) => {
-	console.log("HELLO");
-
-	return {
-		props: { hello: 1 },
-	};
-};
-
 export default App;

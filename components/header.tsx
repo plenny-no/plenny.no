@@ -4,7 +4,7 @@ import { Router } from "next/dist/client/router";
 import { FaShoppingCart } from "react-icons/fa";
 import Button from "./button";
 import Link from "./link";
-import Logo from "./logo.svg";
+import NextLink from "next/link";
 import theme from "../utils/theme";
 import useConfig from "../utils/use-config";
 
@@ -85,7 +85,11 @@ const Header: React.FC = () => {
 		<header css={container}>
 			<section css={header}>
 				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
-				<Logo css={logo} />
+				<NextLink href="/">
+					<a>
+						<img src="/logo.svg" css={logo} />
+					</a>
+				</NextLink>
 				<Button>
 					<FaShoppingCart />
 				</Button>
