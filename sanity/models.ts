@@ -76,7 +76,7 @@ export type SanityCallToAction = SanityObject<
 	{
 		title: string;
 		text: SanityObjectArray<SanityBlockContent>;
-		image: SanityReference;
+		image: SanityIllustration;
 		link?: SanityLink;
 		imageAlignment: "left" | "right";
 	}
@@ -139,5 +139,18 @@ export type SanityVariant = SanityDocument<
 		price: number;
 		compareAtPrice: number;
 		inventoryQuantity: number;
+	}
+>;
+
+export type SanityConfig = SanityDocument<
+	"config",
+	{
+		navigation: SanityObjectArray<SanityLink>;
+		footer: {
+			twitter?: string;
+			instagram?: string;
+			facebook?: string;
+			links?: SanityObjectArray<SanityLink>;
+		};
 	}
 >;

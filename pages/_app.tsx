@@ -2,11 +2,13 @@ import React from "react";
 import { AppProps } from "next/app";
 import { css } from "@emotion/core";
 import Header from "../components/header";
-import { SWRConfig } from "swr";
-import sanity from "../sanity";
+import useSwr from "swr";
 
 import "normalize.css";
 import "../global-styles.css";
+import { ConfigProvider } from "../utils/use-config";
+import { GetServerSideProps } from "next";
+import sanity from "../sanity";
 
 const wrapper = css`
 	display: flex;
@@ -30,12 +32,24 @@ const footer = css`
 const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
 
+	const { data, error } = useSwr(
+		pageProps.config
+			? null
+			: `*[_id in ["global-config", "drafts.global-config"]]
+			| order(_updatedAt desc)
+			[0]`,
+		{
+			fetcher: (query: string) => sanity.fetch(query),
+		}
+	);
+
+	const config = pageProps.config ? pageProps.config : data;
+
+	if (error) return <div>Hjelp! Her gikk noe fryktelig galt...</div>;
+	if (!config) return null;
+
 	return (
-		<SWRConfig
-			value={{
-				fetcher: (query: string) => sanity.fetch(query),
-			}}
-		>
+		<ConfigProvider value={config}>
 			<div css={wrapper}>
 				<Header />
 				<main css={main}>
@@ -43,8 +57,16 @@ const App: React.FC<AppProps> = (props) => {
 				</main>
 				<footer css={footer}>PLENNY ANS</footer>
 			</div>
-		</SWRConfig>
+		</ConfigProvider>
 	);
+};
+
+export const getServerSideProps: GetServerSideProps = async (params) => {
+	console.log("HELLO");
+
+	return {
+		props: { hello: 1 },
+	};
 };
 
 export default App;

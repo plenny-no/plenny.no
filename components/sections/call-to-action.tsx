@@ -6,39 +6,26 @@ import { SanityCallToAction } from "../../sanity/models";
 import { urlFor } from "../../sanity";
 
 const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
-	display: flex;
-	flex-direction: ${alignment === "right" ? "row-reverse" : "row"};
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 2rem;
+	align-items: center;
 	max-width: 1000px;
 	margin: 0 auto;
-	justify-content: space-between;
 	padding: 2rem;
 
-	& > * {
-		flex: 1;
+	@media screen and (max-width: 750px) {
+		grid-template-columns: 1fr;
 	}
 
-	@media (max-width: 750px) {
-		flex-direction: column;
-	}
-`;
-
-const image = css`
-	width: 100%;
-	height: auto;
-`;
-
-const text = (alignment: SanityCallToAction["imageAlignment"]) => css`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-
-	@media (min-width: 750px) {
-		padding: ${alignment === "right" ? "0 2rem 0 0" : "0 0 0 2rem"};
+	& > img {
+		width: 100%;
+		height: auto;
+		grid-row: ${alignment === "right" ? 0 : 1};
 	}
 
-	& > h2 {
-		font-size: 2rem;
+	& > section {
+		grid-row: ${alignment === "right" ? 1 : 0};
 	}
 `;
 
@@ -53,11 +40,9 @@ const CallToAction: React.FC<Props> = (props) => {
 
 	return (
 		<article css={wrapper(content.imageAlignment)}>
-			<div>
-				<img css={image} src={imageUrl} />
-			</div>
-			<section css={text(content.imageAlignment)}>
-				<h2>{content.title}</h2>
+			<img src={imageUrl} alt={content.image.alt} />
+			<section>
+				<h1>{content.title}</h1>
 				<BlockContentToReact blocks={content.text} />
 				{content.link && (
 					<Link to={content.link.url}>{content.link.title}</Link>

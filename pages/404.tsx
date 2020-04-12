@@ -1,6 +1,13 @@
 import React from "react";
 import Head from "next/head";
 import { css } from "@emotion/core";
+import sanity from "../sanity";
+import { SanityConfig } from "../sanity/models";
+import { GetStaticProps } from "next";
+
+const space = css`
+	height: 4rem;
+`;
 
 const FourOhFour = () => (
 	<>
@@ -8,6 +15,7 @@ const FourOhFour = () => (
 			<title>404 | Plenny.no</title>
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
+		<div css={space} />
 		<h1
 			css={css`
 				font-family: baloo-thambi2;
@@ -23,5 +31,21 @@ const FourOhFour = () => (
 		</p>
 	</>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+	const config = await sanity.fetch<SanityConfig>(
+		`
+		*[_id in ["global-config", "drafts.global-config"]]
+		| order(_updatedAt desc)
+		[0]
+		`
+	);
+
+	return {
+		props: {
+			config,
+		},
+	};
+};
 
 export default FourOhFour;

@@ -1,6 +1,4 @@
 import React from "react";
-import useSWR from "swr";
-import { urlFor } from "../sanity";
 import { css } from "@emotion/core";
 import theme from "../utils/theme";
 
@@ -21,13 +19,14 @@ const hero = css`
 
 type Props = {
 	image: string;
+	alt: string;
 };
 
 const Hero: React.FC<Props> = (props) => {
-	const { image } = props;
+	const { image, alt } = props;
 	return (
 		<article css={hero}>
-			<img src={image} alt="Plenny koser seg med dyrene på marken" />
+			<img src={image} alt={alt} />
 		</article>
 	);
 };

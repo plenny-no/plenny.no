@@ -1,39 +1,56 @@
 import React from "react";
 import Head from "next/head";
 import Hero from "../components/hero";
-import useSWR from "swr";
-import { urlFor } from "../sanity";
-import { SanityFrontPage } from "../sanity/models";
+import sanity, { urlFor } from "../sanity";
+import { SanityFrontPage, SanityConfig } from "../sanity/models";
 import Section from "../components/sections";
+import { GetStaticProps } from "next";
 
-const Home = () => {
-	const { data, error } = useSWR<SanityFrontPage>(`
-		*[_id in ["global-front-page", "drafts.global-front-page"]]
-		| order(_updatedAt desc)
-		[0]
-	`);
+type Props = {
+	frontPage: SanityFrontPage;
+};
 
-	if (error) {
-		return <div>Søren klype</div>;
-	}
+const Home: React.FC<Props> = (props) => {
+	const { frontPage } = props;
 
-	if (!data) {
-		return <div>laster...</div>;
-	}
-
-	const image = urlFor(data.hero).url() || "";
+	const image = urlFor(frontPage.hero).url() || "";
 
 	return (
 		<>
 			<Head>
 				<title>Hjem | Plenny.no</title>
 			</Head>
-			<Hero image={image} />
-			{data.sections.map((section) => (
+			<Hero image={image} alt={frontPage.hero.alt} />
+			{frontPage.sections.map((section) => (
 				<Section key={section._key} section={section} />
 			))}
 		</>
 	);
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+	const config = await sanity.fetch<SanityConfig>(
+		`
+		*[_id in ["global-config", "drafts.global-config"]]
+		| order(_updatedAt desc)
+		[0]
+		`
+	);
+
+	const frontPage = await sanity.fetch<SanityFrontPage>(
+		`
+		*[_id in ["global-front-page", "drafts.global-front-page"]]
+		| order(_updatedAt desc)
+		[0]
+		`
+	);
+
+	return {
+		props: {
+			config,
+			frontPage,
+		},
+	};
 };
 
 export default Home;

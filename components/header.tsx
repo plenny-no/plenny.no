@@ -6,6 +6,7 @@ import Button from "./button";
 import Link from "./link";
 import Logo from "./logo.svg";
 import theme from "../utils/theme";
+import useConfig from "../utils/use-config";
 
 const container = css`
 	position: absolute;
@@ -66,6 +67,7 @@ const navigation = (visible: boolean) => css`
 const Header: React.FC = () => {
 	const [isOpen, setOpen] = React.useState(false);
 	const toggleOpen = () => setOpen((current) => !current);
+	const config = useConfig();
 
 	React.useEffect(() => {
 		const handleRouteChange = () => {
@@ -90,18 +92,11 @@ const Header: React.FC = () => {
 			</section>
 			<nav css={navigation(isOpen)}>
 				<ul>
-					<li>
-						<Link to="/store">Butikk</Link>
-					</li>
-					<li>
-						<Link to="/what">Hva er Plenny Shake?</Link>
-					</li>
-					<li>
-						<Link to="/blog">Blogg</Link>
-					</li>
-					<li>
-						<Link to="/about">Om Oss</Link>
-					</li>
+					{config.navigation.map((link) => (
+						<li key={link._key}>
+							<Link to={link.url}>{link.title}</Link>
+						</li>
+					))}
 				</ul>
 			</nav>
 		</header>
