@@ -19,7 +19,7 @@ const FourOhFour = () => (
 
 		<p>
 			Denne siden er under konstruksjon 🏗, så kom tilbake senere, kanskje den
-			finnes da
+			finnes da!
 		</p>
 	</>
 );

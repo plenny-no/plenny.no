@@ -44,7 +44,12 @@
   font-display: swap;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: montserrat, sans-serif;
-  font-size: 16px;
+  font-family: Lato, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
 }

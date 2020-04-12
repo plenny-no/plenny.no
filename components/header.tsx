@@ -4,9 +4,15 @@ import { Router } from "next/dist/client/router";
 import { FaShoppingCart } from "react-icons/fa";
 import Button from "./button";
 import Link from "./link";
+import Logo from "./logo.svg";
+import theme from "../utils/theme";
 
 const container = css`
-	background-color: bisque;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4rem;
 `;
 
 const header = css`
@@ -15,12 +21,11 @@ const header = css`
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
 	padding: 1rem;
 	color: firebrick;
 	font-weight: bold;
-	background-color: bisque;
-	z-index: 1;
+	background: transparent;
+	z-index: 10;
 `;
 
 const logo = css`
@@ -28,13 +33,12 @@ const logo = css`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	font-family: baloo-thambi2;
-	font-size: 1.8rem;
+	height: 3rem;
 `;
 
 const navigation = (visible: boolean) => css`
-	background-color: bisque;
-	position: absolute;
+	background-color: ${theme.safron};
+	position: fixed;
 	width: 100%;
 	left: 0;
 	height: 100vh;
@@ -79,7 +83,7 @@ const Header: React.FC = () => {
 		<header css={container}>
 			<section css={header}>
 				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
-				<span css={logo}>Plenny</span>
+				<Logo css={logo} />
 				<Button>
 					<FaShoppingCart />
 				</Button>

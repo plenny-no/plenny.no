@@ -14,23 +14,12 @@ const regularButton = css`
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 0.5em 1em;
-
-	:focus,
-	:hover {
-		outline: solid;
-	}
 `;
 
 const primaryButton = css`
 	${regularButton}
 
 	border: 2px solid firebrick;
-
-	:focus,
-	:hover {
-		background-color: firebrick;
-		color: bisque;
-	}
 `;
 
 const Button: React.FC<Props> = (props) => {

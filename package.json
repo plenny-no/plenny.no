@@ -10,12 +10,16 @@
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.28",
+    "@sanity/block-content-to-react": "^2.0.7",
+    "@sanity/client": "^1.149.7",
+    "@sanity/image-url": "^0.140.18",
     "next": "9.3.4",
     "normalize.css": "^8.0.1",
     "polished": "^3.5.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-icons": "^3.9.0"
+    "react-icons": "^3.9.0",
+    "swr": "^0.2.0"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
@@ -23,6 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-plugin-emotion": "^10.0.33",
+    "babel-plugin-inline-react-svg": "^1.1.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",

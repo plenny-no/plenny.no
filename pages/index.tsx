@@ -1,23 +1,39 @@
 import React from "react";
 import Head from "next/head";
-import { css } from "@emotion/core";
+import Hero from "../components/hero";
+import useSWR from "swr";
+import { urlFor } from "../sanity";
+import { SanityFrontPage } from "../sanity/models";
+import Section from "../components/sections";
 
-const Home = () => (
-	<>
-		<Head>
-			<title>Hjem | Plenny.no</title>
-		</Head>
-		<h1
-			css={css`
-				font-family: baloo-thambi2;
-				font-size: 2rem;
-			`}
-		>
-			👋 Velkommen til plenny.no!
-		</h1>
+const Home = () => {
+	const { data, error } = useSWR<SanityFrontPage>(`
+		*[_id in ["global-front-page", "drafts.global-front-page"]]
+		| order(_updatedAt desc)
+		[0]
+	`);
 
-		<p>Her kommer det en fresh nettbutikk om ikke lenge ✨</p>
-	</>
-);
+	if (error) {
+		return <div>Søren klype</div>;
+	}
+
+	if (!data) {
+		return <div>laster...</div>;
+	}
+
+	const image = urlFor(data.hero).url() || "";
+
+	return (
+		<>
+			<Head>
+				<title>Hjem | Plenny.no</title>
+			</Head>
+			<Hero image={image} />
+			{data.sections.map((section) => (
+				<Section key={section._key} section={section} />
+			))}
+		</>
+	);
+};
 
 export default Home;
