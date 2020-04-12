@@ -1,6 +1,6 @@
 {
-    "name": "plenny.no",
-    "short_name": "plenny.no",
+    "name": "Plenny",
+    "short_name": "Plenny",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#fbf6ff",
-    "background_color": "#fbf6ff",
+    "theme_color": "#f9c22e",
+    "background_color": "#f9c22e",
     "display": "standalone"
 }
