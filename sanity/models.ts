@@ -1,101 +1,56 @@
-/**
- *
- * UTILITIES
- *
- */
+import { SanityObject, SanityDocument, SanityObjectArray } from "./utils";
+import { SanityAsset } from "@sanity/image-url/lib/types/types";
 
-export type SupportedLanguages = "en";
-export type DefaultLagnguage = "no";
-export type Locale<T> = { [L in DefaultLagnguage]: T } &
+export type SanityInternalLink = SanityObject<
+	"internalLink",
 	{
-		[L in SupportedLanguages]: T | undefined;
-	};
-
-export type SanityObject<T extends string, O extends object> = { _type: T } & O;
-
-// NB: Only use this when all elements within the array are sanity object (i.e.
-// not docuements, arrays ect)
-export type SanityObjectArray<O extends SanityObject<string, object>> = ({
-	_key: string;
-} & O)[];
-
-export type SanityReference = SanityObject<"reference", { _ref: string }>;
-
-export type SanityUnknown = SanityObject<string, {}>;
-
-export type SanityDocument<T extends string = string, R = {}> = R & {
-	_id: string;
-	_rev: string;
-	_type: T;
-	_createdAt: string;
-	_updatedAt: string;
-};
-
-export type SanityImage = SanityObject<
-	"image",
-	{
-		asset: SanityReference;
+		title: string;
+		url:
+			| SanityDocument<"page", { slug: { current: string } }>
+			| SanityDocument<"frontPage", {}>;
 	}
 >;
 
-export type SanitySlug = SanityObject<"slug", { _current: string }>;
-
-export type SanityBlockContent = SanityObject<"block", object>;
-
-/**
- *
- * TYPES
- *
- */
-
-export type SanityIllustration = SanityObject<
-	"illustration",
-	{
-		alt: string;
-		caption: string;
-		asset: SanityReference;
-	}
->;
-
-export type SanityLink = SanityObject<
-	"link",
+export type SanityExternalLink = SanityObject<
+	"externalLink",
 	{
 		title: string;
 		url: string;
 	}
 >;
 
-/**
- *
- * SECTIONS
- *
- */
+export type SanityIllustration = SanityObject<
+	"illustration",
+	{
+		alt: string;
+		caption?: string;
+		asset: SanityAsset;
+	}
+>;
+
+export type SanityBlockContent = SanityObjectArray<
+	SanityObject<"block", object>
+>;
 
 export type SanityCallToAction = SanityObject<
 	"callToAction",
 	{
 		title: string;
-		text: SanityObjectArray<SanityBlockContent>;
+		text: SanityBlockContent;
+		link?: SanityInternalLink;
 		image: SanityIllustration;
-		link?: SanityLink;
-		imageAlignment: "left" | "right";
+		imageAlignment: "right" | "left";
 	}
 >;
 
 export type SanityTextArea = SanityObject<
 	"textArea",
 	{
-		text: SanityObjectArray<SanityBlockContent>;
+		text: SanityBlockContent;
 	}
 >;
 
 export type SanitySection = SanityCallToAction | SanityTextArea;
-
-/**
- *
- * DOCUMENTS
- *
- */
 
 export type SanityFrontPage = SanityDocument<
 	"frontPage",
@@ -106,51 +61,22 @@ export type SanityFrontPage = SanityDocument<
 >;
 
 export type SanityPage = SanityDocument<
-	"page",
+	"frontPage",
 	{
 		title: string;
 		slug: { current: string };
 		sections: SanityObjectArray<SanitySection>;
 	}
 >;
-
-export type SanityProduct = SanityDocument<
-	"product",
-	{
-		title: string;
-		description: SanityTextArea;
-		images: SanityObjectArray<SanityIllustration>;
-		variants: SanityObjectArray<SanityReference>;
-		productId: string;
-		defaultPrice: number;
-		vendor?: string;
-		handle: SanitySlug;
-		deleted: boolean;
-	}
->;
-
-export type SanityVariant = SanityDocument<
-	"variant",
-	{
-		title: string;
-		sku: string;
-		product: SanityReference;
-		variantId: string;
-		price: number;
-		compareAtPrice: number;
-		inventoryQuantity: number;
-	}
->;
-
-export type SanityConfig = SanityDocument<
-	"config",
-	{
-		navigation: SanityObjectArray<SanityLink>;
-		footer: {
+export type SanityConfig = {
+	navigation: SanityObjectArray<SanityInternalLink | SanityExternalLink>;
+	footer: SanityObject<
+		"footer",
+		{
 			twitter?: string;
-			instagram?: string;
 			facebook?: string;
-			links?: SanityObjectArray<SanityLink>;
-		};
-	}
->;
+			instagram?: string;
+			links?: SanityObjectArray<SanityInternalLink | SanityExternalLink>;
+		}
+	>;
+};

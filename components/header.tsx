@@ -3,10 +3,10 @@ import { css } from "@emotion/core";
 import { Router } from "next/dist/client/router";
 import { FaShoppingCart } from "react-icons/fa";
 import Button from "./button";
-import Link from "./link";
 import NextLink from "next/link";
 import theme from "../utils/theme";
 import useConfig from "../utils/use-config";
+import SanityLink from "./sanity-link";
 
 const container = css`
 	position: absolute;
@@ -96,11 +96,13 @@ const Header: React.FC = () => {
 			</section>
 			<nav css={navigation(isOpen)}>
 				<ul>
-					{config.navigation.map((link) => (
-						<li key={link._key}>
-							<Link to={link.url}>{link.title}</Link>
-						</li>
-					))}
+					{config.navigation.map((link) => {
+						return (
+							<li key={link._key}>
+								<SanityLink link={link} />
+							</li>
+						);
+					})}
 				</ul>
 			</nav>
 		</header>

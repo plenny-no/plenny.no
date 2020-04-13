@@ -5,7 +5,7 @@ import {
 	SanityImageSource,
 } from "@sanity/image-url/lib/types/types";
 
-const sanity = sanityClient({
+export const sanity = sanityClient({
 	projectId: "bxtjfvg8",
 	dataset: "production",
 	useCdn: true,

@@ -1,7 +1,8 @@
 import React from "react";
-import { SanitySection, SanityUnknown } from "../../sanity/models";
+import { SanitySection } from "../../sanity/models";
 import TextArea from "./text-area";
 import CallToAction from "./call-to-action";
+import { SanityUnknown } from "../../sanity/utils";
 
 type Props = {
 	section: SanitySection;

@@ -1,16 +1,21 @@
 import React from "react";
 import Head from "next/head";
 import { css } from "@emotion/core";
-import sanity from "../sanity";
 import { SanityConfig } from "../sanity/models";
 import { GetStaticProps } from "next";
+import { ConfigProvider } from "../utils/use-config";
+import { fetchConfig } from "../sanity/queries";
 
 const space = css`
 	height: 4rem;
 `;
 
-const FourOhFour = () => (
-	<>
+type Props = {
+	config: SanityConfig;
+};
+
+const FourOhFour: React.FC<Props> = (props) => (
+	<ConfigProvider value={props.config}>
 		<Head>
 			<title>404 | Plenny.no</title>
 			<link rel="icon" href="/favicon.ico" />
@@ -29,17 +34,11 @@ const FourOhFour = () => (
 			Denne siden er under konstruksjon 🏗, så kom tilbake senere, kanskje den
 			finnes da!
 		</p>
-	</>
+	</ConfigProvider>
 );
 
-export const getStaticProps: GetStaticProps = async () => {
-	const config = await sanity.fetch<SanityConfig>(
-		`
-		*[_id in ["global-config", "drafts.global-config"]]
-		| order(_updatedAt desc)
-		[0]
-		`
-	);
+export const getStaticProps: GetStaticProps<Props> = async () => {
+	const config = await fetchConfig();
 
 	return {
 		props: {

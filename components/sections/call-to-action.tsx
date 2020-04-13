@@ -1,31 +1,36 @@
 import React from "react";
 import { css } from "@emotion/core";
 import BlockContentToReact from "@sanity/block-content-to-react";
-import Link from "../link";
 import { SanityCallToAction } from "../../sanity/models";
 import { urlFor } from "../../sanity";
+import SanityLink from "../sanity-link";
 
 const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	grid-column-gap: 2rem;
 	align-items: center;
 	max-width: 1000px;
 	margin: 0 auto;
 	padding: 2rem;
 
-	@media screen and (max-width: 750px) {
-		grid-template-columns: 1fr;
+	@media screen and (min-width: 750px) {
+		grid-template-columns: 1fr 1fr;
 	}
 
 	& > img {
 		width: 100%;
 		height: auto;
-		grid-row: ${alignment === "right" ? 0 : 1};
+
+		@media screen and (min-width: 750px) {
+			grid-row: ${alignment === "right" ? 0 : 1};
+		}
 	}
 
 	& > section {
-		grid-row: ${alignment === "right" ? 1 : 0};
+		@media screen and (min-width: 750px) {
+			grid-row: ${alignment === "right" ? 1 : 0};
+		}
 	}
 `;
 
@@ -44,9 +49,7 @@ const CallToAction: React.FC<Props> = (props) => {
 			<section>
 				<h1>{content.title}</h1>
 				<BlockContentToReact blocks={content.text} />
-				{content.link && (
-					<Link to={content.link.url}>{content.link.title}</Link>
-				)}
+				{content.link && <SanityLink link={content.link} />}
 			</section>
 		</article>
 	);

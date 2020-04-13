@@ -1,10 +1,12 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import sanity from "../sanity";
-import { SanityConfig, SanityPage } from "../sanity/models";
 import Head from "next/head";
 import { css } from "@emotion/core";
 import Section from "../components/sections";
+import { ConfigProvider } from "../utils/use-config";
+import { fetchConfig, fetchPage } from "../sanity/queries";
+import { SanityPage, SanityConfig } from "../sanity/models";
 
 const space = css`
 	height: 4rem;
@@ -12,13 +14,14 @@ const space = css`
 
 type Props = {
 	page: SanityPage;
+	config: SanityConfig;
 };
 
 const Page: React.FC<Props> = (props) => {
-	const { page } = props;
+	const { page, config } = props;
 
 	return (
-		<>
+		<ConfigProvider value={config}>
 			<Head>
 				<title>{page.title} | Plenny.no</title>
 			</Head>
@@ -26,7 +29,7 @@ const Page: React.FC<Props> = (props) => {
 			{(page.sections || []).map((section) => (
 				<Section key={section._key} section={section} />
 			))}
-		</>
+		</ConfigProvider>
 	);
 };
 
@@ -34,31 +37,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const pages = await sanity.fetch<Pick<SanityPage, "slug">[]>(
 		`*[_type == "page"] {slug}`
 	);
-	const paths = pages.map((page) => ({ params: { slug: page.slug.current } }));
+	const paths = pages.map((page) => ({
+		params: { slug: page.slug.current },
+	}));
 
-	return {
-		paths,
-		fallback: false,
-	};
+	return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
 	params,
 }) => {
-	const config = await sanity.fetch<SanityConfig>(
-		`
-		*[_id in ["global-config", "drafts.global-config"]]
-		| order(_updatedAt desc)
-		[0]
-		`
-	);
-	const page = await sanity.fetch<SanityPage>(
-		`
-		*[_type == "page" && slug.current == "${params?.slug}"]
-		| order(_updatedAt desc)
-		[0]
-		`
-	);
+	const slug = params?.slug;
+
+	if (!slug) {
+		throw new Error(`Cannot find page with slug "${slug}"`);
+	}
+
+	const config = await fetchConfig();
+	const page = await fetchPage(slug);
+
 	return { props: { page, config } };
 };
 

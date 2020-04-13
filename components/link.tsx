@@ -1,5 +1,5 @@
 import React from "react";
-import NextLink from "next/link";
+import NextLink, { LinkProps } from "next/link";
 import { css } from "@emotion/core";
 import theme from "../utils/theme";
 
@@ -21,23 +21,42 @@ const link = css`
 	}
 `;
 
-type Props = {
-	to: string;
-} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">;
+type Props = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> &
+	LinkProps;
 
 const Link: React.FC<Props> = (props) => {
-	const { to, children, ...rest } = props;
+	const {
+		href,
+		as,
+		replace,
+		scroll,
+		shallow,
+		passHref,
+		prefetch,
+		children,
+		...rest
+	} = props;
 
-	if (/^(https?|tel|mailto):/.test(to)) {
+	const url = typeof href === "string" ? href : href.href || "";
+
+	if (/^(https?|tel|mailto):/.test(url)) {
 		return (
-			<a css={link} href={to} {...rest}>
+			<a css={link} href={url} {...rest}>
 				{children}
 			</a>
 		);
 	}
 
 	return (
-		<NextLink href={to} passHref>
+		<NextLink
+			href={href}
+			as={as}
+			replace={replace}
+			scroll={scroll}
+			shallow={shallow}
+			passHref={passHref || true}
+			prefetch={prefetch}
+		>
 			<a css={link} {...rest}>
 				{children}
 			</a>
