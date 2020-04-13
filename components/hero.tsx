@@ -26,8 +26,8 @@ type Props = {
 const Hero: React.FC<Props> = (props) => {
 	const { image, alt } = props;
 
-	const imageUrl = urlFor(image).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(image).maxWidth(50).url() || "";
+	const imageUrl = urlFor(image).format("webp").url() || "";
+	const fallbackImageUrl = urlFor(image).url() || "";
 
 	return (
 		<article css={hero}>

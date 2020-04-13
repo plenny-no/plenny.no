@@ -45,7 +45,7 @@ const CallToAction: React.FC<Props> = (props) => {
 
 	const imageUrl =
 		urlFor(content.image).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(content.image).maxWidth(50).url() || "";
+	const fallbackImageUrl = urlFor(content.image).maxWidth(500).url() || "";
 
 	return (
 		<article css={wrapper(content.imageAlignment)}>
