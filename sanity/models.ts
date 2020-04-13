@@ -1,4 +1,10 @@
-import { SanityObject, SanityDocument, SanityObjectArray } from "./utils";
+import {
+	SanityObject,
+	SanityDocument,
+	SanityObjectArray,
+	SanitySlug,
+	SanityReference,
+} from "./utils";
 import { SanityAsset } from "@sanity/image-url/lib/types/types";
 
 export type SanityInternalLink = SanityObject<
@@ -28,6 +34,34 @@ export type SanityIllustration = SanityObject<
 	}
 >;
 
+export type SanityProduct = SanityDocument<
+	"product",
+	{
+		title: string;
+		description: SanityTextArea;
+		images: SanityObjectArray<SanityIllustration>;
+		variants: SanityObjectArray<SanityVariant>;
+		productId: string;
+		defaultPrice: string;
+		vendor?: string;
+		handle: SanitySlug;
+		deleted: boolean;
+	}
+>;
+
+export type SanityVariant = SanityDocument<
+	"variant",
+	{
+		title: string;
+		sku: string;
+		product: SanityReference<SanityProduct>;
+		variantId: string;
+		price: string;
+		compareAtPrice?: string;
+		inventoryQuantity?: number;
+	}
+>;
+
 export type SanityBlockContent = SanityObjectArray<
 	SanityObject<"block", object>
 >;
@@ -43,6 +77,14 @@ export type SanityCallToAction = SanityObject<
 	}
 >;
 
+export type SanityAdvertisement = SanityObject<
+	"advertisement",
+	{
+		header?: string;
+		products: SanityProduct[];
+	}
+>;
+
 export type SanityTextArea = SanityObject<
 	"textArea",
 	{
@@ -50,7 +92,10 @@ export type SanityTextArea = SanityObject<
 	}
 >;
 
-export type SanitySection = SanityCallToAction | SanityTextArea;
+export type SanitySection =
+	| SanityCallToAction
+	| SanityTextArea
+	| SanityAdvertisement;
 
 export type SanityFrontPage = SanityDocument<
 	"frontPage",

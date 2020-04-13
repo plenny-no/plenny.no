@@ -3,6 +3,7 @@ import { SanitySection } from "../../sanity/models";
 import TextArea from "./text-area";
 import CallToAction from "./call-to-action";
 import { SanityUnknown } from "../../sanity/utils";
+import Advertisement from "./advertisement";
 
 type Props = {
 	section: SanitySection;
@@ -14,6 +15,8 @@ const Section: React.FC<Props> = (props) => {
 			return <TextArea content={props.section} />;
 		case "callToAction":
 			return <CallToAction content={props.section} />;
+		case "advertisement":
+			return <Advertisement content={props.section} />;
 		default:
 			console.warn(
 				`Unknown block type: ${(props.section as SanityUnknown)._type}`

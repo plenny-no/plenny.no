@@ -53,6 +53,17 @@ export async function fetchFrontPage() {
 						...,
 						asset->
 					}
+				},
+				_type == "advertisement" => {
+					...,
+					products[]-> {
+						...,
+						images[] {
+							...,
+							asset->
+						},
+						variants[]->
+					}
 				}
 			}
 		}

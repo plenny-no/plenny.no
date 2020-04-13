@@ -34,6 +34,6 @@ export type SanityDocument<T extends string = string, R = {}> = R & {
 
 export type SanityImage = SanityObject<"image", SanityImageObject>;
 
-export type SanitySlug = SanityObject<"slug", { _current: string }>;
+export type SanitySlug = SanityObject<"slug", { current: string }>;
 
 export type SanityBlockContent = SanityObject<"block", object>;
