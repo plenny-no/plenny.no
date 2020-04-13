@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Hero from "../components/hero";
-import { urlFor } from "../sanity";
 import { fetchConfig, fetchFrontPage } from "../sanity/queries";
 import Section from "../components/sections";
 import { GetStaticProps } from "next";
@@ -17,15 +16,13 @@ type Props = {
 const Home: React.FC<Props> = (props) => {
 	const { frontPage, config } = props;
 
-	const image = urlFor(frontPage.hero).url() || "";
-
 	return (
 		<ConfigProvider value={config}>
 			<Head>
 				<title>Hjem | Plenny.no</title>
 			</Head>
 			<Layout>
-				<Hero image={image} alt={frontPage.hero.alt} />
+				<Hero image={frontPage.hero} alt={frontPage.hero.alt} />
 				{frontPage.sections.map((section) => (
 					<Section key={section._key} section={section} />
 				))}

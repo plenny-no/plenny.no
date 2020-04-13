@@ -18,12 +18,14 @@ const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 		grid-template-columns: 1fr 1fr;
 	}
 
-	& > img {
-		width: 100%;
-		height: auto;
-
+	& > picture {
 		@media screen and (min-width: 750px) {
 			grid-row: ${alignment === "right" ? 0 : 1};
+		}
+
+		img {
+			width: 100%;
+			height: auto;
 		}
 	}
 
@@ -41,11 +43,16 @@ type Props = {
 const CallToAction: React.FC<Props> = (props) => {
 	const { content } = props;
 
-	const imageUrl = urlFor(content.image).maxWidth(500).url() || "";
+	const imageUrl =
+		urlFor(content.image).format("webp").maxWidth(500).url() || "";
+	const fallbackImageUrl = urlFor(content.image).maxWidth(50).url() || "";
 
 	return (
 		<article css={wrapper(content.imageAlignment)}>
-			<img src={imageUrl} alt={content.image.alt} />
+			<picture>
+				<source srcSet={`${imageUrl} 1x`} type="image/webp" />
+				<img src={fallbackImageUrl} alt={content.image.alt} />
+			</picture>
 			<section>
 				<h1>{content.title}</h1>
 				<BlockContentToReact blocks={content.text} />
