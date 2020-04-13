@@ -5,6 +5,7 @@ import { SanityConfig } from "../sanity/models";
 import { GetStaticProps } from "next";
 import { ConfigProvider } from "../utils/use-config";
 import { fetchConfig } from "../sanity/queries";
+import Layout from "../components/layout";
 
 const space = css`
 	height: 4rem;
@@ -20,20 +21,22 @@ const FourOhFour: React.FC<Props> = (props) => (
 			<title>404 | Plenny.no</title>
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
-		<div css={space} />
-		<h1
-			css={css`
-				font-family: baloo-thambi2;
-				font-size: 2rem;
-			`}
-		>
-			Siden du prøvde å gå til finnes ikke... enda!
-		</h1>
+		<Layout>
+			<div css={space} />
+			<h1
+				css={css`
+					font-family: baloo-thambi2;
+					font-size: 2rem;
+				`}
+			>
+				Siden du prøvde å gå til finnes ikke... enda!
+			</h1>
 
-		<p>
-			Denne siden er under konstruksjon 🏗, så kom tilbake senere, kanskje den
-			finnes da!
-		</p>
+			<p>
+				Denne siden er under konstruksjon 🏗, så kom tilbake senere, kanskje den
+				finnes da!
+			</p>
+		</Layout>
 	</ConfigProvider>
 );
 

@@ -7,6 +7,7 @@ import Section from "../components/sections";
 import { ConfigProvider } from "../utils/use-config";
 import { fetchConfig, fetchPage } from "../sanity/queries";
 import { SanityPage, SanityConfig } from "../sanity/models";
+import Layout from "../components/layout";
 
 const space = css`
 	height: 4rem;
@@ -25,10 +26,12 @@ const Page: React.FC<Props> = (props) => {
 			<Head>
 				<title>{page.title} | Plenny.no</title>
 			</Head>
-			<div css={space} />
-			{(page.sections || []).map((section) => (
-				<Section key={section._key} section={section} />
-			))}
+			<Layout>
+				<div css={space} />
+				{(page.sections || []).map((section) => (
+					<Section key={section._key} section={section} />
+				))}
+			</Layout>
 		</ConfigProvider>
 	);
 };

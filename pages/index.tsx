@@ -21,10 +21,10 @@ const Home: React.FC<Props> = (props) => {
 
 	return (
 		<ConfigProvider value={config}>
+			<Head>
+				<title>Hjem | Plenny.no</title>
+			</Head>
 			<Layout>
-				<Head>
-					<title>Hjem | Plenny.no</title>
-				</Head>
 				<Hero image={image} alt={frontPage.hero.alt} />
 				{frontPage.sections.map((section) => (
 					<Section key={section._key} section={section} />
