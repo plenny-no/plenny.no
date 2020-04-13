@@ -85,6 +85,14 @@ export type SanityAdvertisement = SanityObject<
 	}
 >;
 
+export type SanityProductList = SanityObject<
+	"productList",
+	{
+		header?: string;
+		products: SanityProduct[];
+	}
+>;
+
 export type SanityTextArea = SanityObject<
 	"textArea",
 	{
@@ -95,7 +103,8 @@ export type SanityTextArea = SanityObject<
 export type SanitySection =
 	| SanityCallToAction
 	| SanityTextArea
-	| SanityAdvertisement;
+	| SanityAdvertisement
+	| SanityProductList;
 
 export type SanityFrontPage = SanityDocument<
 	"frontPage",

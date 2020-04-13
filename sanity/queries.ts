@@ -64,6 +64,17 @@ export async function fetchFrontPage() {
 						},
 						variants[]->
 					}
+				},
+				_type == "productList" => {
+					...,
+					products[]-> {
+						...,
+						images[] {
+							...,
+							asset->
+						},
+						variants[]->
+					}
 				}
 			}
 		}
@@ -89,6 +100,28 @@ export async function fetchPage(slug: string) {
 					image {
 						...,
 						asset->
+					}
+				},
+				_type == "advertisement" => {
+					...,
+					products[]-> {
+						...,
+						images[] {
+							...,
+							asset->
+						},
+						variants[]->
+					}
+				},
+				_type == "productList" => {
+					...,
+					products[]-> {
+						...,
+						images[] {
+							...,
+							asset->
+						},
+						variants[]->
 					}
 				}
 			}
