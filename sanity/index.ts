@@ -8,10 +8,16 @@ import {
 export const sanity = sanityClient({
 	projectId: "bxtjfvg8",
 	dataset: "production",
+	useCdn: false,
+});
+
+export const sanityWithCdn = sanityClient({
+	projectId: "bxtjfvg8",
+	dataset: "production",
 	useCdn: true,
 });
 
-const builder = imageUrlBuilder(sanity as SanityClient);
+const builder = imageUrlBuilder(sanityWithCdn as SanityClient);
 
 export function urlFor(source: SanityImageSource) {
 	return builder.image(source);
