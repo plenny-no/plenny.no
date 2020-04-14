@@ -8,6 +8,10 @@ const wrapper = css`
 	min-height: 100vh;
 `;
 
+const header = css`
+	z-index: 1;
+`;
+
 const main = css`
 	flex: 1;
 `;
@@ -36,7 +40,7 @@ const Layout: React.FC<Props> = (props) => {
 
 	return (
 		<div css={wrapper}>
-			<Header />
+			<Header css={header} />
 			{spacer}
 			<main css={main}>{children}</main>
 			<footer css={footer}>PLENNY ANS</footer>

@@ -8,6 +8,32 @@ import {
 } from "../../sanity/queries";
 import { SanityConfig, SanityProduct } from "../../sanity/models";
 import { ConfigProvider } from "../../utils/use-config";
+import TextArea from "../../components/sections/text-area";
+import { urlFor } from "../../sanity";
+import { css } from "@emotion/core";
+
+const wrapper = css`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	& > h1 {
+		padding: 1rem;
+		text-align: center;
+	}
+
+	& > article {
+		padding: 1rem;
+		max-width: 800px;
+	}
+
+	& img {
+		padding: 0;
+		width: 100%;
+		max-width: 500px;
+		height: auto;
+	}
+`;
 
 type Props = {
 	config: SanityConfig;
@@ -16,9 +42,23 @@ type Props = {
 
 const Butikk: React.FC<Props> = (props) => {
 	const { config, product } = props;
+
+	const imageUrl =
+		urlFor(product.images[0]).format("webp").maxWidth(500).url() || "";
+	const fallbackImageUrl = urlFor(product.images[0]).maxWidth(500).url() || "";
+
 	return (
 		<ConfigProvider value={config}>
-			<Layout>{product.title}</Layout>
+			<Layout>
+				<article css={wrapper}>
+					<h1>{product.title}</h1>
+					<picture>
+						<source srcSet={`${imageUrl} 1x`} type="image/webp" />
+						<img src={fallbackImageUrl} alt={product.images[0]?.alt} />
+					</picture>
+					{product.description && <TextArea content={product.description} />}
+				</article>
+			</Layout>
 		</ConfigProvider>
 	);
 };

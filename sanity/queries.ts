@@ -134,6 +134,13 @@ export async function fetchProduct(slug: string) {
 	return await sanity.fetch<SanityProduct>(
 		`*[_type == "product" && slug.current == "${slug}"]
 		| order(_updatedAt desc)
-		[0]`
+		[0] {
+			...,
+			images[] {
+				...,
+				asset->
+			},
+			variants[]->
+		}`
 	);
 }

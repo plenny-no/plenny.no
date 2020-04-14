@@ -42,9 +42,12 @@ const navigation = (visible: boolean) => css`
 	position: fixed;
 	width: 100%;
 	left: 0;
-	height: 100vh;
-	bottom: ${visible ? "0vh" : "100vh"};
-	transition: bottom 0.3s ease-in-out;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	transition: all 0.3s ease-in-out;
+	transform: translateY(${visible ? "0" : "-100vh"});
+	transform-origin: top center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -64,7 +67,12 @@ const navigation = (visible: boolean) => css`
 	}
 `;
 
-const Header: React.FC = () => {
+type Props = {
+	className?: string;
+};
+
+const Header: React.FC<Props> = (props) => {
+	const { className } = props;
 	const [isOpen, setOpen] = React.useState(false);
 	const toggleOpen = () => setOpen((current) => !current);
 	const config = useConfig();
@@ -82,7 +90,7 @@ const Header: React.FC = () => {
 	}, []);
 
 	return (
-		<header css={container}>
+		<header className={className} css={container}>
 			<section css={header}>
 				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
 				<NextLink href="/">
