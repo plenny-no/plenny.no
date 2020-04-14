@@ -34,8 +34,8 @@ const wrapper = css`
 		max-width: 500px;
 		height: auto;
 
-		@media screen and (min-width: 500px) {
-			border-radius: 0.25rem;
+		@media screen and (max-width: 500px) {
+			border-radius: 0;
 		}
 	}
 `;
@@ -50,10 +50,6 @@ const slider = css`
 		li {
 			width: 50px;
 			height: 50px;
-
-			img {
-				border-radius: 0.125rem;
-			}
 		}
 
 		li:not(.slick-active) {

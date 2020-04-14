@@ -53,3 +53,7 @@ body {
   font-size: 18px;
   line-height: 1.5;
 }
+
+img {
+  border-radius: 0.25rem;
+}

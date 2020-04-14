@@ -13,6 +13,7 @@ const hero = css`
 	picture > img {
 		width: 100%;
 		height: 100%;
+		border-radius: 0;
 		object-fit: cover;
 		object-position: 50% 0%;
 	}
