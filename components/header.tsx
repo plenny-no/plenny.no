@@ -48,13 +48,15 @@ const navigation = (visible: boolean) => css`
 	transition: all 0.3s ease-in-out;
 	transform: translateY(${visible ? "0" : "-100vh"});
 	transform-origin: top center;
+	overflow: hidden;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	padding-top: 5rem;
 
 	& > ul {
 		margin: 0;
 		padding: 0;
+		width: 100%;
 		list-style: none;
 		display: flex;
 		flex-direction: column;
