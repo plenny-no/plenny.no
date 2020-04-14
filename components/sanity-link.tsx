@@ -25,7 +25,7 @@ const InternalLink: React.FC<{ link: SanityInternalLink }> = (props) => {
 			return <Link href="/butikk">{link.title}</Link>;
 		case "page":
 			return (
-				<Link href="[slug]" as={link.url.slug.current}>
+				<Link href="/[slug]" as={link.url.slug.current}>
 					{link.title}
 				</Link>
 			);
