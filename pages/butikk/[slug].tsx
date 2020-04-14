@@ -11,6 +11,7 @@ import { ConfigProvider } from "../../utils/use-config";
 import TextArea from "../../components/sections/text-area";
 import { urlFor } from "../../sanity";
 import { css } from "@emotion/core";
+import Slider from "react-slick";
 
 const wrapper = css`
 	display: flex;
@@ -43,19 +44,43 @@ type Props = {
 const Butikk: React.FC<Props> = (props) => {
 	const { config, product } = props;
 
-	const imageUrl =
-		urlFor(product.images[0]).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(product.images[0]).maxWidth(500).url() || "";
+	const settings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		arrows: false,
+	};
+
+	const images = (product.images || []).map((image) => {
+		const imageUrl = urlFor(image).format("webp").maxWidth(500).url() || "";
+		const fallbackImageUrl = urlFor(image).maxWidth(500).url() || "";
+		return (
+			<div key={image._key}>
+				<picture>
+					<source srcSet={`${imageUrl} 1x`} type="image/webp" />
+					<img src={fallbackImageUrl} alt={product.images[0]?.alt} />
+				</picture>
+			</div>
+		);
+	});
 
 	return (
 		<ConfigProvider value={config}>
 			<Layout>
 				<article css={wrapper}>
 					<h1>{product.title}</h1>
-					<picture>
-						<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-						<img src={fallbackImageUrl} alt={product.images[0]?.alt} />
-					</picture>
+					<Slider
+						css={css`
+							max-width: 500px;
+							width: 100%;
+							margin-bottom: 1rem;
+						`}
+						{...settings}
+					>
+						{images}
+					</Slider>
 					{product.description && <TextArea content={product.description} />}
 				</article>
 			</Layout>
