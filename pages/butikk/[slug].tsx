@@ -100,7 +100,7 @@ const Butikk: React.FC<Props> = (props) => {
 							srcSet={`${images[i]?.preview.main} 1x`}
 							type="image/webp"
 						/>
-						<img src={images[i]?.preview.main} alt={images[i]?.alt} />
+						<img src={images[i]?.preview.fallback} alt={images[i]?.alt} />
 					</picture>
 				</a>
 			);
