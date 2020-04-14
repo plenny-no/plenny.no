@@ -1,10 +1,6 @@
-import React from "react";
-import {
-	SanityAdvertisement,
-	SanityProduct,
-	SanityProductList,
-} from "../../sanity/models";
 import { css } from "@emotion/core";
+import React from "react";
+import { SanityProductList } from "../../sanity/models";
 import ProductPreview from "../product-preview";
 
 const wrapper = css`
