@@ -42,6 +42,7 @@ const slider = css`
 
 	.slick-dots {
 		position: relative;
+		bottom: 0;
 		li {
 			width: 50px;
 			height: 50px;
