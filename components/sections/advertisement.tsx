@@ -60,10 +60,10 @@ const Advertisement: React.FC<Props> = (props) => {
 	const { content } = props;
 
 	return (
-		<article css={wrapper(content.products.length)}>
+		<article css={wrapper(content.products.slice(0, 3).length)}>
 			{content.header && <h1>{content.header}</h1>}
 			<ul>
-				{content.products.map((product, i) => (
+				{content.products.slice(0, 3).map((product, i) => (
 					<li
 						key={product._id}
 						css={css`
