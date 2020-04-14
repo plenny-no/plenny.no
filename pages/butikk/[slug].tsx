@@ -36,6 +36,23 @@ const wrapper = css`
 	}
 `;
 
+const slider = css`
+	max-width: 500px;
+	width: 100%;
+
+	.slick-dots {
+		position: relative;
+		li {
+			width: 50px;
+			height: 50px;
+		}
+
+		li:not(.slick-active) {
+			opacity: 0.6;
+		}
+	}
+`;
+
 type Props = {
 	config: SanityConfig;
 	product: SanityProduct;
@@ -44,6 +61,20 @@ type Props = {
 const Butikk: React.FC<Props> = (props) => {
 	const { config, product } = props;
 
+	const images = (product.images || []).map((image) => ({
+		key: image._key,
+		caption: image.caption,
+		alt: image.alt,
+		regular: {
+			main: urlFor(image).format("webp").maxWidth(500).url() || "",
+			fallback: urlFor(image).maxWidth(500).url() || "",
+		},
+		preview: {
+			main: urlFor(image).format("webp").maxWidth(50).url() || "",
+			fallback: urlFor(image).maxWidth(50).url() || "",
+		},
+	}));
+
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -51,35 +82,39 @@ const Butikk: React.FC<Props> = (props) => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		arrows: false,
+		dotsClass: "slick-dots",
+		customPaging(i: number) {
+			return (
+				<a>
+					<picture>
+						<source
+							srcSet={`${images[i]?.preview.main} 1x`}
+							type="image/webp"
+						/>
+						<img src={images[i]?.preview.main} alt={images[i]?.alt} />
+					</picture>
+				</a>
+			);
+		},
 	};
-
-	const images = (product.images || []).map((image) => {
-		const imageUrl = urlFor(image).format("webp").maxWidth(500).url() || "";
-		const fallbackImageUrl = urlFor(image).maxWidth(500).url() || "";
-		return (
-			<div key={image._key}>
-				<picture>
-					<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-					<img src={fallbackImageUrl} alt={product.images[0]?.alt} />
-				</picture>
-			</div>
-		);
-	});
 
 	return (
 		<ConfigProvider value={config}>
 			<Layout>
 				<article css={wrapper}>
 					<h1>{product.title}</h1>
-					<Slider
-						css={css`
-							max-width: 500px;
-							width: 100%;
-							margin-bottom: 1rem;
-						`}
-						{...settings}
-					>
-						{images}
+					<Slider css={slider} {...settings}>
+						{images.map((image) => (
+							<div key={image.key}>
+								<picture>
+									<source
+										srcSet={`${image.regular.main} 1x`}
+										type="image/webp"
+									/>
+									<img src={image.regular.fallback} alt={image?.alt} />
+								</picture>
+							</div>
+						))}
 					</Slider>
 					{product.description && <TextArea content={product.description} />}
 				</article>
