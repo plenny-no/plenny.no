@@ -21,7 +21,7 @@ const Home: React.FC<Props> = (props) => {
 			<Head>
 				<title>Hjem | Plenny.no</title>
 			</Head>
-			<Layout>
+			<Layout noSpace>
 				<Hero image={frontPage.hero} alt={frontPage.hero.alt} />
 				{frontPage.sections.map((section) => (
 					<Section key={section._key} section={section} />

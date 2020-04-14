@@ -28,11 +28,11 @@ const articleWrapper = css`
 	}
 `;
 
-type props = {
+type Props = {
 	product: SanityProduct;
 };
 
-const ProductPreview: React.FC<props> = (props) => {
+const ProductPreview: React.FC<Props> = (props) => {
 	const {
 		product: { defaultPrice, title, images = [] },
 	} = props;

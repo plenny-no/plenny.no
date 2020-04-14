@@ -10,15 +10,25 @@ const SanityLink: React.FC<Props> = (props) => {
 	const { link } = props;
 	switch (link._type) {
 		case "internalLink":
-			return link.url._type === "page" ? (
+			return <InternalLink link={link} />;
+		case "externalLink":
+			return <Link href={link.url}>{link.title}</Link>;
+	}
+};
+
+const InternalLink: React.FC<{ link: SanityInternalLink }> = (props) => {
+	const { link } = props;
+	switch (link.url._type) {
+		case "frontPage":
+			return <Link href="/">{link.title}</Link>;
+		case "store":
+			return <Link href="/butikk">{link.title}</Link>;
+		case "page":
+			return (
 				<Link href="[slug]" as={link.url.slug.current}>
 					{link.title}
 				</Link>
-			) : (
-				<Link href="/">{link.title}</Link>
 			);
-		case "externalLink":
-			return <Link href={link.url}>{link.title}</Link>;
 	}
 };
 

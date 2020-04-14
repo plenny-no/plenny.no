@@ -7,10 +7,6 @@ import { ConfigProvider } from "../utils/use-config";
 import { fetchConfig } from "../sanity/queries";
 import Layout from "../components/layout";
 
-const space = css`
-	height: 4rem;
-`;
-
 type Props = {
 	config: SanityConfig;
 };
@@ -22,7 +18,6 @@ const FourOhFour: React.FC<Props> = (props) => (
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<Layout>
-			<div css={space} />
 			<h1
 				css={css`
 					font-family: baloo-thambi2;

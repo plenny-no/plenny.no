@@ -21,14 +21,23 @@ const footer = css`
 	align-items: center;
 `;
 
-type Props = {};
+const space = css`
+	height: 4rem;
+`;
+
+type Props = {
+	noSpace?: boolean;
+};
 
 const Layout: React.FC<Props> = (props) => {
-	const { children } = props;
+	const { noSpace, children } = props;
+
+	const spacer = noSpace ? null : <div css={space} />;
 
 	return (
 		<div css={wrapper}>
 			<Header />
+			{spacer}
 			<main css={main}>{children}</main>
 			<footer css={footer}>PLENNY ANS</footer>
 		</div>

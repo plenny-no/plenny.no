@@ -13,7 +13,8 @@ export type SanityInternalLink = SanityObject<
 		title: string;
 		url:
 			| SanityDocument<"page", { slug: { current: string } }>
-			| SanityDocument<"frontPage", {}>;
+			| SanityDocument<"frontPage", {}>
+			| SanityDocument<"store", {}>;
 	}
 >;
 
@@ -44,7 +45,7 @@ export type SanityProduct = SanityDocument<
 		productId: string;
 		defaultPrice: string;
 		vendor?: string;
-		handle: SanitySlug;
+		slug: SanitySlug;
 		deleted: boolean;
 	}
 >;
@@ -122,6 +123,14 @@ export type SanityPage = SanityDocument<
 		sections: SanityObjectArray<SanitySection>;
 	}
 >;
+
+export type SanityStore = SanityDocument<
+	"store",
+	{
+		sections: SanityObjectArray<SanitySection>;
+	}
+>;
+
 export type SanityConfig = {
 	navigation: SanityObjectArray<SanityInternalLink | SanityExternalLink>;
 	footer: SanityObject<

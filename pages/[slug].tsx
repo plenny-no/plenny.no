@@ -2,16 +2,11 @@ import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import sanity from "../sanity";
 import Head from "next/head";
-import { css } from "@emotion/core";
 import Section from "../components/sections";
 import { ConfigProvider } from "../utils/use-config";
-import { fetchConfig, fetchPage } from "../sanity/queries";
+import { fetchConfig, fetchPage, fetchPagePaths } from "../sanity/queries";
 import { SanityPage, SanityConfig } from "../sanity/models";
 import Layout from "../components/layout";
-
-const space = css`
-	height: 4rem;
-`;
 
 type Props = {
 	page: SanityPage;
@@ -27,7 +22,6 @@ const Page: React.FC<Props> = (props) => {
 				<title>{page.title} | Plenny.no</title>
 			</Head>
 			<Layout>
-				<div css={space} />
 				{(page.sections || []).map((section) => (
 					<Section key={section._key} section={section} />
 				))}
@@ -37,9 +31,7 @@ const Page: React.FC<Props> = (props) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const pages = await sanity.fetch<Pick<SanityPage, "slug">[]>(
-		`*[_type == "page"] {slug}`
-	);
+	const pages = await fetchPagePaths();
 	const paths = pages.map((page) => ({
 		params: { slug: page.slug.current },
 	}));
