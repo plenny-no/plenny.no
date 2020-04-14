@@ -1,6 +1,5 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import sanity from "../sanity";
 import Head from "next/head";
 import Section from "../components/sections";
 import { ConfigProvider } from "../utils/use-config";

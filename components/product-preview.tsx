@@ -17,6 +17,7 @@ const articleWrapper = css`
 	& img {
 		width: 100%;
 		height: auto;
+		border-radius: 0.125rem;
 	}
 
 	& h2 {
