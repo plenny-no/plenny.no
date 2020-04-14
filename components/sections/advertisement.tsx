@@ -27,6 +27,26 @@ const wrapper = (numProducts: number) => css`
 				? `". p1 p1 p1 p1 ."`
 				: numProducts === 2
 				? `"p1 p1 p1 p2 p2 p2"`
+				: `"p1 p1 p1 p1 p1 p1" "p2 p2 p2 p3 p3 p3"`};
+		}
+
+		@media screen and (min-width: 700px) {
+			grid-column-gap: 2rem;
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-areas: ${numProducts === 1
+				? `". p1 p1 p1 p1 ."`
+				: numProducts === 2
+				? `"p1 p1 p1 p2 p2 p2"`
+				: `". p1 p1 p1 p1 ." "p2 p2 p2 p3 p3 p3"`};
+		}
+
+		@media screen and (min-width: 850px) {
+			grid-column-gap: 2rem;
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-areas: ${numProducts === 1
+				? `". p1 p1 p1 p1 ."`
+				: numProducts === 2
+				? `"p1 p1 p1 p2 p2 p2"`
 				: `"p1 p1 p1 p1 p2 p2" "p1 p1 p1 p1 p3 p3"`};
 		}
 	}
