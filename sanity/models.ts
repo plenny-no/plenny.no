@@ -43,6 +43,7 @@ export type SanityProduct = SanityDocument<
 		images: SanityObjectArray<SanityIllustration>;
 		variants: SanityObjectArray<SanityVariant>;
 		productId: string;
+		storefrontId: string;
 		defaultPrice: string;
 		vendor?: string;
 		slug: SanitySlug;
@@ -57,6 +58,7 @@ export type SanityVariant = SanityDocument<
 		sku: string;
 		product: SanityReference<SanityProduct>;
 		variantId: string;
+		storefrontId: string;
 		price: string;
 		compareAtPrice?: string;
 		inventoryQuantity?: number;

@@ -7,6 +7,7 @@ import NextLink from "next/link";
 import theme from "../utils/theme";
 import useConfig from "../utils/use-config";
 import SanityLink from "./sanity-link";
+import useCheckout from "../utils/use-checkout";
 
 const container = css`
 	position: absolute;
@@ -69,6 +70,24 @@ const navigation = (visible: boolean) => css`
 	}
 `;
 
+const cartButton = css`
+	position: relative;
+
+	span {
+		font-size: 1rem;
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 1.3em;
+		height: 1.3em;
+		transform: translate(0, -10%);
+		padding-left: 0.8em;
+	}
+`;
+
 type Props = {
 	className?: string;
 };
@@ -78,6 +97,17 @@ const Header: React.FC<Props> = (props) => {
 	const [isOpen, setOpen] = React.useState(false);
 	const toggleOpen = () => setOpen((current) => !current);
 	const config = useConfig();
+
+	const checkout = useCheckout();
+
+	const itemsInCart =
+		(checkout &&
+			(checkout.checkout.lineItems.length === 0
+				? null
+				: checkout.checkout.lineItems.length > 99
+				? "99+"
+				: checkout.checkout.lineItems.length)) ||
+		null;
 
 	React.useEffect(() => {
 		const handleRouteChange = () => {
@@ -100,8 +130,9 @@ const Header: React.FC<Props> = (props) => {
 						<img src="/logo.svg" css={logo} />
 					</a>
 				</NextLink>
-				<Button>
+				<Button css={cartButton}>
 					<FaShoppingCart />
+					<span>{itemsInCart}</span>
 				</Button>
 			</section>
 			<nav css={navigation(isOpen)}>

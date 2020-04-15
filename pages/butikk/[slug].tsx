@@ -12,6 +12,8 @@ import TextArea from "../../components/sections/text-area";
 import { urlFor } from "../../sanity";
 import { css } from "@emotion/core";
 import Slider from "react-slick";
+import useCheckout from "../../utils/use-checkout";
+import Button from "../../components/button";
 
 const wrapper = css`
 	display: flex;
@@ -65,6 +67,8 @@ type Props = {
 
 const Butikk: React.FC<Props> = (props) => {
 	const { config, product } = props;
+
+	const checkout = useCheckout();
 
 	const images = (product.images || []).map((image) => ({
 		key: image._key,
@@ -121,6 +125,24 @@ const Butikk: React.FC<Props> = (props) => {
 							</div>
 						))}
 					</Slider>
+					<br />
+					{product.variants.map((variant) => (
+						<p key={variant._id}>
+							<Button
+								primary
+								disabled={checkout === null}
+								onClick={() => {
+									if (checkout) {
+										checkout.addLineItems([
+											{ quantity: 1, variantId: variant.storefrontId },
+										]);
+									}
+								}}
+							>
+								Kjøp {variant.title}
+							</Button>
+						</p>
+					))}
 					{product.description && <TextArea content={product.description} />}
 				</article>
 			</Layout>
