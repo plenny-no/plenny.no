@@ -30,7 +30,8 @@ const wrapper = css`
 			background: none;
 			align-self: flex-start;
 			margin-right: -1rem;
-			margin-top: -0.25rem;
+			margin-top: -0.5rem;
+			padding: 0.5rem;
 			font-size: 0.85rem;
 		}
 	}
@@ -45,7 +46,7 @@ const wrapper = css`
 		display: flex;
 		justify-content: space-between;
 
-		label {
+		div {
 			font-size: 0.625rem;
 			text-transform: uppercase;
 			text-align: center;
@@ -113,20 +114,20 @@ const CartItem: React.FC<Props> = (props) => {
 			</header>
 			<h3>{item.variant?.title}</h3>
 			<section>
-				<label>
+				<div>
 					Pris <div>{price && numberFotmatter(price)}</div>
-				</label>
-				<label>
+				</div>
+				<div>
 					Antall
 					<QuantityControl
 						quantity={item.quantity}
 						updateQuantity={updateQuanity}
 					/>
-				</label>
-				<label>
+				</div>
+				<div>
 					Totalt
 					<div>{totalPrice && numberFotmatter(totalPrice)}</div>
-				</label>
+				</div>
 			</section>
 		</article>
 	);

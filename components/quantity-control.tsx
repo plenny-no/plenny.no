@@ -9,6 +9,8 @@ const wrapper = css`
 		border-bottom: 1px solid gray;
 		padding: 0.2rem 0.8rem;
 		line-height: inherit;
+		cursor: pointer;
+		touch-action: manipulation;
 
 		:first-of-type {
 			border-left: 1px solid gray;
@@ -27,6 +29,8 @@ const wrapper = css`
 		text-align: center;
 		line-height: inherit;
 		border: 1px solid gray;
+		border-radius: 0;
+		appearance: none;
 		padding: 0.2rem 0.5rem;
 		width: 3rem;
 
@@ -87,6 +91,11 @@ const QuantityControl: React.FC<Props> = (props) => {
 		}
 	};
 
+	const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+		const newQuantity = parseInt(evt.target.value, 10);
+		_setQuantity(newQuantity < 1 ? 1 : newQuantity);
+	};
+
 	return (
 		<div css={wrapper}>
 			<button
@@ -97,9 +106,10 @@ const QuantityControl: React.FC<Props> = (props) => {
 			</button>
 			<input
 				type="number"
+				pattern="[0-9]*"
 				value={_quantity}
 				disabled={isUpdating}
-				onChange={(evt) => _setQuantity(parseInt(evt.target.value, 10))}
+				onChange={handleChange}
 				onBlur={handleBlur}
 			/>
 			<button
