@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { Router } from "next/dist/client/router";
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import Button from "./button";
 import NextLink from "next/link";
 import theme from "../utils/theme";
@@ -9,7 +9,6 @@ import useConfig from "../utils/use-config";
 import SanityLink from "./sanity-link";
 import useCheckout from "../utils/use-checkout";
 import { allowScrolling } from "../utils/scrolling";
-import Drawer from "@material-ui/core/SwipeableDrawer";
 import Cart from "./cart";
 import { useCart } from "./cart/hooks";
 
