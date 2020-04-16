@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { Router } from "next/dist/client/router";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import Button from "./button";
 import NextLink from "next/link";
 import theme from "../utils/theme";
@@ -9,6 +9,9 @@ import useConfig from "../utils/use-config";
 import SanityLink from "./sanity-link";
 import useCheckout from "../utils/use-checkout";
 import { allowScrolling } from "../utils/scrolling";
+import Drawer from "@material-ui/core/SwipeableDrawer";
+import Cart from "./cart";
+import { useCart } from "./cart/hooks";
 
 const container = css`
 	position: absolute;
@@ -96,10 +99,13 @@ type Props = {
 const Header: React.FC<Props> = (props) => {
 	const { className } = props;
 	const config = useConfig();
-	const [isOpen, setOpen] = React.useState(false);
+	const [showNavigation, setShowNavigation] = React.useState(false);
+	const [, setShowCart] = useCart();
 
-	const toggleOpen = () =>
-		setOpen((current) => {
+	const toggleCart = (state: boolean) => () => setShowCart(state);
+
+	const toggleNavigation = () =>
+		setShowNavigation((current) => {
 			allowScrolling(current);
 			return !current;
 		});
@@ -117,7 +123,7 @@ const Header: React.FC<Props> = (props) => {
 
 	React.useEffect(() => {
 		const handleRouteChange = () => {
-			setOpen(false);
+			setShowNavigation(false);
 			allowScrolling(true);
 		};
 
@@ -130,19 +136,22 @@ const Header: React.FC<Props> = (props) => {
 
 	return (
 		<header className={className} css={container}>
+			<Cart />
 			<section css={header}>
-				<Button onClick={toggleOpen}>{isOpen ? "Lukk" : "Meny"}</Button>
+				<Button onClick={toggleNavigation}>
+					{showNavigation ? "Lukk" : "Meny"}
+				</Button>
 				<NextLink href="/">
 					<a>
 						<img src="/logo.svg" css={logo} />
 					</a>
 				</NextLink>
-				<Button css={cartButton}>
+				<Button css={cartButton} onClick={toggleCart(true)}>
 					<FaShoppingCart />
 					<span>{itemsInCart}</span>
 				</Button>
 			</section>
-			<nav css={navigation(isOpen)}>
+			<nav css={navigation(showNavigation)}>
 				<ul>
 					{config.navigation.map((link) => {
 						return (

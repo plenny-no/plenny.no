@@ -61,12 +61,12 @@ declare namespace ShopifyBuy {
 
 		replaceLineItems(
 			checkoutId: string,
-			lineItems: CheckoutLineItemInput
+			lineItems: CheckoutLineItemInput[]
 		): Promise<Checkout>;
 
 		updateLineItems(
 			checkoutId: string,
-			lineItems: CheckoutLineItemInput
+			lineItems: CheckoutLineItemUpdateInput[]
 		): Promise<Checkout>;
 
 		updateShippingAddress(
@@ -123,6 +123,13 @@ declare namespace ShopifyBuy {
 		customAttributes?: AttributeInput[];
 		quantity: number;
 		variantId: string;
+	};
+
+	export type CheckoutLineItemUpdateInput = {
+		customAttributes?: AttributeInput[];
+		id: string;
+		quantity: number;
+		variantId?: string;
 	};
 
 	export type UnitPriceMeasurement = {
