@@ -8,6 +8,7 @@ import theme from "../utils/theme";
 import useConfig from "../utils/use-config";
 import SanityLink from "./sanity-link";
 import useCheckout from "../utils/use-checkout";
+import { allowScrolling } from "../utils/scrolling";
 
 const container = css`
 	position: absolute;
@@ -94,9 +95,14 @@ type Props = {
 
 const Header: React.FC<Props> = (props) => {
 	const { className } = props;
-	const [isOpen, setOpen] = React.useState(false);
-	const toggleOpen = () => setOpen((current) => !current);
 	const config = useConfig();
+	const [isOpen, setOpen] = React.useState(false);
+
+	const toggleOpen = () =>
+		setOpen((current) => {
+			allowScrolling(current);
+			return !current;
+		});
 
 	const checkout = useCheckout();
 
@@ -112,6 +118,7 @@ const Header: React.FC<Props> = (props) => {
 	React.useEffect(() => {
 		const handleRouteChange = () => {
 			setOpen(false);
+			allowScrolling(true);
 		};
 
 		Router.events.on("routeChangeStart", handleRouteChange);
