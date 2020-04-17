@@ -1,11 +1,27 @@
 import React from "react";
 import { CheckoutLineItem } from "shopify-buy";
 import { FaTimes } from "react-icons/fa";
-import { css } from "@emotion/core";
+import { css, keyframes } from "@emotion/core";
 import { numberFotmatter } from "../../utils/helpers";
 import QuantityControl from "../quantity-control";
 
-const wrapper = css`
+const bounceOut = keyframes`
+	2% {
+		transform: scale(1.2);
+	}
+
+	10% {
+		transform: scale(0);
+		opacity: 0;
+	}
+
+	100% {
+		transform: scale(0);
+		opacity: 0;
+	}
+`;
+
+const wrapper = (isRemoving: boolean) => css`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -13,6 +29,7 @@ const wrapper = css`
 	border-radius: 0.25rem;
 	box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
 	padding: 0.5rem 1rem;
+	animation: ${isRemoving ? bounceOut : ""} 6s;
 
 	& > header {
 		display: flex;
@@ -105,7 +122,7 @@ const CartItem: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<article css={wrapper}>
+		<article css={wrapper(isRemoving)}>
 			<header>
 				<h2>{item.title}</h2>
 				<button onClick={handleRemove} disabled={isRemoving}>

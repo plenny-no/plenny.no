@@ -58,7 +58,6 @@ const wrapper = css`
 
 			li {
 				margin-bottom: 1rem;
-				border-bottom: 1px solid #eee;
 			}
 		}
 	}
