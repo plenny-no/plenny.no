@@ -9,17 +9,22 @@ const regularButton = css`
 	border: 0;
 	background: unset;
 	cursor: pointer;
-	padding: 0.5em;
 	color: firebrick;
 	text-transform: uppercase;
 	font-weight: bold;
-	padding: 0.5em 1em;
+	padding: 0.75em 1em;
+	border-radius: 0.25rem;
+
+	:disabled {
+		opacity: 0.8;
+		cursor: not-allowed;
+	}
 `;
 
 const primaryButton = css`
 	${regularButton}
-
-	border: 2px solid firebrick;
+	background: firebrick;
+	color: white;
 `;
 
 const Button: React.FC<Props> = (props) => {

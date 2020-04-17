@@ -35,6 +35,7 @@ const wrapper = css`
 		border: 1px solid gray;
 		border-radius: 0;
 		appearance: none;
+		background: none;
 		padding: 0.2rem 0.5rem;
 		width: 3rem;
 
@@ -85,7 +86,7 @@ const NumberInput: React.FC<Props> = (props) => {
 			<input
 				type="number"
 				pattern="[0-9]*"
-				value={value || ""}
+				value={isNaN(value) ? "" : value}
 				disabled={disabled}
 				onChange={handleChange}
 				onBlur={onBlur}
