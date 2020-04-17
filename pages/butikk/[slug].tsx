@@ -31,71 +31,96 @@ const wrapper = css`
 		text-align: center;
 	}
 
-	& > article {
-		padding: 1rem;
-		max-width: 800px;
-	}
-
-	& > section {
+	& > div {
 		width: 100%;
-		padding: 2rem 1rem;
-		background: #f9c22e;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 2rem;
 
-		& > * {
-			max-width: 500px;
-			width: 100%;
+		& > *:first-of-type {
+			margin-bottom: 2rem;
 		}
 
-		p {
-			margin: 0;
-			text-align: center;
+		@media screen and (min-width: 1000px) {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: start;
+			grid-column-gap: 3rem;
+			justify-items: end;
+			max-width: 1000px;
+			padding: 2rem;
+			justify-items: start;
 
-			:nth-of-type(1) {
-				font-size: 1rem;
+			& > *:first-of-type {
+				margin: 0;
 			}
 
-			:nth-of-type(2) {
-				text-align: right;
-				margin-bottom: 0.5rem;
-				font-size: 1.25rem;
-
-				span {
-					font-weight: bold;
-				}
-			}
-
-			:nth-of-type(3) {
-				margin: 0.25rem 0;
-				opacity: 0.7;
-				font-size: 0.85rem;
+			& > section {
+				border-radius: 0.25rem;
 			}
 		}
 
-		ul {
-			background: white;
-			border-radius: 0.25rem;
+		& > article {
 			padding: 1rem;
-			list-style: none;
-			margin-bottom: 1rem;
+			max-width: 800px;
+		}
 
-			li {
-				display: grid;
-				grid-template-columns: 1fr auto;
-				grid-column-gap: 0.5rem;
+		section {
+			width: 100%;
+			padding: 2rem 1rem;
+			background: #f9c22e;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
-				:not(:last-of-type) {
-					border-bottom: 1px solid #ddd;
-					padding-bottom: 0.85rem;
-					margin-bottom: 0.85rem;
+			& > * {
+				max-width: 500px;
+				width: 100%;
+			}
+
+			p {
+				margin: 0;
+				text-align: center;
+
+				:nth-of-type(1) {
+					font-size: 1rem;
 				}
 
-				span {
-					word-wrap: break-word;
-					word-break: break-all;
+				:nth-of-type(2) {
+					text-align: right;
+					margin-bottom: 0.5rem;
+					font-size: 1.25rem;
+
+					span {
+						font-weight: bold;
+					}
+				}
+
+				:nth-of-type(3) {
+					margin: 0.25rem 0;
+					opacity: 0.7;
+					font-size: 0.85rem;
+				}
+			}
+			ul {
+				background: white;
+				border-radius: 0.25rem;
+				padding: 1rem;
+				list-style: none;
+				margin-bottom: 1rem;
+
+				li {
+					display: grid;
+					grid-template-columns: 1fr auto;
+					grid-column-gap: 0.5rem;
+
+					:not(:last-of-type) {
+						border-bottom: 1px solid #ddd;
+						padding-bottom: 0.85rem;
+						margin-bottom: 0.85rem;
+					}
+
+					span {
+						word-wrap: break-word;
+						word-break: break-all;
+					}
 				}
 			}
 		}
@@ -219,72 +244,74 @@ const Butikk: React.FC<Props> = (props) => {
 			<Layout>
 				<article css={wrapper}>
 					<h1>{product.title}</h1>
-					<Slider css={slider} {...settings}>
-						{images.map((image) => (
-							<div key={image.key}>
-								<picture>
-									<source
-										srcSet={`${image.regular.main} 1x`}
-										type="image/webp"
-									/>
-									<img src={image.regular.fallback} alt={image?.alt} />
-								</picture>
-							</div>
-						))}
-					</Slider>
-					<section>
-						<p>Velg det du vil ha (ta gjerne fire, ta åtte, ta alle)</p>
-						<ul>
-							{product.variants.map((variant) => {
-								const value = quantities[variant.storefrontId];
-								const handleChange = (quantity: number) =>
-									setQuantity(variant.storefrontId, quantity);
-								const handleBlur = () => {
-									if (isNaN(value)) {
-										setQuantity(variant.storefrontId, 0);
-									} else if (value > 99) {
-										setQuantity(variant.storefrontId, 99);
-									} else if (value < 0) {
-										setQuantity(variant.storefrontId, 0);
-									}
-								};
-								const handleIncrease = () =>
-									setQuantity(variant.storefrontId, value + 1);
-								const handleDecrease = () =>
-									setQuantity(variant.storefrontId, value - 1);
-								return (
-									<li key={variant._id}>
-										<span>{variant.title}</span>
-										<NumberInput
-											value={value}
-											min={0}
-											max={99}
-											onBlur={handleBlur}
-											onChange={handleChange}
-											onIncrease={handleIncrease}
-											onDecrease={handleDecrease}
-											disabled={addingToCart}
+					<div>
+						<Slider css={slider} {...settings}>
+							{images.map((image) => (
+								<div key={image.key}>
+									<picture>
+										<source
+											srcSet={`${image.regular.main} 1x`}
+											type="image/webp"
 										/>
-									</li>
-								);
-							})}
-						</ul>
-						<p>
-							Totalt:{" "}
-							<span>
-								{numberFotmatter(totalPrice)}
-								,-
-							</span>
-						</p>
-						<p>PS: Alle ordre over 800 får gratis frakt ;)</p>
-						<Button
-							primary
-							disabled={checkout === null || totalPrice <= 0 || addingToCart}
-							onClick={addToCart}
-						>
-							Legg i handlekurven
-						</Button>
-					</section>
+										<img src={image.regular.fallback} alt={image?.alt} />
+									</picture>
+								</div>
+							))}
+						</Slider>
+						<section>
+							<p>Velg det du vil ha (ta gjerne fire, ta åtte, ta alle)</p>
+							<ul>
+								{product.variants.map((variant) => {
+									const value = quantities[variant.storefrontId];
+									const handleChange = (quantity: number) =>
+										setQuantity(variant.storefrontId, quantity);
+									const handleBlur = () => {
+										if (isNaN(value)) {
+											setQuantity(variant.storefrontId, 0);
+										} else if (value > 99) {
+											setQuantity(variant.storefrontId, 99);
+										} else if (value < 0) {
+											setQuantity(variant.storefrontId, 0);
+										}
+									};
+									const handleIncrease = () =>
+										setQuantity(variant.storefrontId, value + 1);
+									const handleDecrease = () =>
+										setQuantity(variant.storefrontId, value - 1);
+									return (
+										<li key={variant._id}>
+											<span>{variant.title}</span>
+											<NumberInput
+												value={value}
+												min={0}
+												max={99}
+												onBlur={handleBlur}
+												onChange={handleChange}
+												onIncrease={handleIncrease}
+												onDecrease={handleDecrease}
+												disabled={addingToCart}
+											/>
+										</li>
+									);
+								})}
+							</ul>
+							<p>
+								Totalt:{" "}
+								<span>
+									{numberFotmatter(totalPrice)}
+									,-
+								</span>
+							</p>
+							<p>PS: Alle ordre over 800 får gratis frakt ;)</p>
+							<Button
+								primary
+								disabled={checkout === null || totalPrice <= 0 || addingToCart}
+								onClick={addToCart}
+							>
+								Legg i handlekurven
+							</Button>
+						</section>
+					</div>
 					{product.description && <TextArea content={product.description} />}
 				</article>
 			</Layout>
