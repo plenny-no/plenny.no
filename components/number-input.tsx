@@ -2,6 +2,7 @@ import React from "react";
 import { css } from "@emotion/core";
 
 const wrapper = css`
+	user-select: none;
 	& > button {
 		border: none;
 		background: none;
