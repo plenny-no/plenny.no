@@ -15,11 +15,8 @@ import Slider from "react-slick";
 import useCheckout from "../../utils/use-checkout";
 import Button from "../../components/button";
 import NumberInput from "../../components/number-input";
-import { createSecureContext } from "tls";
 import { numberFotmatter } from "../../utils/helpers";
 import { useCart } from "../../components/cart/hooks";
-
-const noop = () => null;
 
 const wrapper = css`
 	display: flex;
