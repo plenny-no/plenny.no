@@ -1,54 +1,5 @@
 import React from "react";
-import { css } from "@emotion/core";
-
-const wrapper = css`
-	& > button {
-		border: none;
-		background: none;
-		border-top: 1px solid gray;
-		border-bottom: 1px solid gray;
-		padding: 0.2rem 0.8rem;
-		line-height: inherit;
-		cursor: pointer;
-		touch-action: manipulation;
-
-		:first-of-type {
-			border-left: 1px solid gray;
-			border-top-left-radius: 0.225rem;
-			border-bottom-left-radius: 0.225rem;
-		}
-
-		:last-of-type {
-			border-right: 1px solid gray;
-			border-top-right-radius: 0.225rem;
-			border-bottom-right-radius: 0.225rem;
-		}
-
-		:disabled {
-			border-color: lightgray;
-		}
-	}
-
-	& > input {
-		text-align: center;
-		line-height: inherit;
-		border: 1px solid gray;
-		border-radius: 0;
-		appearance: none;
-		padding: 0.2rem 0.5rem;
-		width: 3rem;
-
-		::-webkit-inner-spin-button,
-		::-webkit-outer-spin-button {
-			-webkit-appearance: none;
-			margin: 0;
-		}
-
-		:disabled {
-			border-color: lightgray;
-		}
-	}
-`;
+import NumberInput from "../number-input";
 
 type Props = {
 	quantity: number;
@@ -91,42 +42,34 @@ const QuantityControl: React.FC<Props> = (props) => {
 		[setTimeoutHandler, updateQuantity, _setQuantity, timeoutHandler]
 	);
 
+	const handleIncrease = () =>
+		lazyUpdateQuantity(Math.min((_quantity || 1) + 1, 99));
+	const handleDecrease = () =>
+		lazyUpdateQuantity(Math.max((_quantity || 1) - 1, 1));
+	const handleChange = (newQuantity: number) => _setQuantity(newQuantity);
 	const handleBlur = async () => {
 		if (_quantity !== quantity) {
+			const newQuantity = isNaN(_quantity)
+				? 1
+				: Math.max(Math.min(_quantity || 1, 99), 1);
 			setIsUpdating(true);
-			await updateQuantity(Math.max(Math.min(_quantity, 99), 1));
+			_setQuantity(newQuantity);
+			await updateQuantity(newQuantity);
 			setIsUpdating(false);
 		}
 	};
 
-	const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		const newQuantity = parseInt(evt.target.value, 10) || 1;
-		_setQuantity(newQuantity);
-	};
-
 	return (
-		<div css={wrapper}>
-			<button
-				disabled={isUpdating || _quantity <= 1}
-				onClick={() => lazyUpdateQuantity(Math.max(_quantity - 1, 1))}
-			>
-				-
-			</button>
-			<input
-				type="number"
-				pattern="[0-9]*"
-				value={_quantity}
-				disabled={isUpdating}
-				onChange={handleChange}
-				onBlur={handleBlur}
-			/>
-			<button
-				disabled={isUpdating || _quantity >= 99}
-				onClick={() => lazyUpdateQuantity(Math.min(_quantity + 1, 99))}
-			>
-				+
-			</button>
-		</div>
+		<NumberInput
+			value={_quantity}
+			max={99}
+			min={1}
+			disabled={isUpdating}
+			onIncrease={handleIncrease}
+			onDecrease={handleDecrease}
+			onChange={handleChange}
+			onBlur={handleBlur}
+		/>
 	);
 };
 
