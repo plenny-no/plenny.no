@@ -23,6 +23,10 @@ const wrapper = css`
 			border-top-right-radius: 0.225rem;
 			border-bottom-right-radius: 0.225rem;
 		}
+
+		:disabled {
+			border-color: lightgray;
+		}
 	}
 
 	& > input {
@@ -38,6 +42,10 @@ const wrapper = css`
 		::-webkit-outer-spin-button {
 			-webkit-appearance: none;
 			margin: 0;
+		}
+
+		:disabled {
+			border-color: lightgray;
 		}
 	}
 `;
@@ -86,21 +94,21 @@ const QuantityControl: React.FC<Props> = (props) => {
 	const handleBlur = async () => {
 		if (_quantity !== quantity) {
 			setIsUpdating(true);
-			await updateQuantity(_quantity);
+			await updateQuantity(Math.max(Math.min(_quantity, 99), 1));
 			setIsUpdating(false);
 		}
 	};
 
 	const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		const newQuantity = parseInt(evt.target.value, 10);
-		_setQuantity(newQuantity < 1 ? 1 : newQuantity);
+		const newQuantity = parseInt(evt.target.value, 10) || 1;
+		_setQuantity(newQuantity);
 	};
 
 	return (
 		<div css={wrapper}>
 			<button
-				disabled={isUpdating}
-				onClick={() => lazyUpdateQuantity(_quantity - 1)}
+				disabled={isUpdating || _quantity <= 1}
+				onClick={() => lazyUpdateQuantity(Math.max(_quantity - 1, 1))}
 			>
 				-
 			</button>
@@ -113,8 +121,8 @@ const QuantityControl: React.FC<Props> = (props) => {
 				onBlur={handleBlur}
 			/>
 			<button
-				disabled={isUpdating}
-				onClick={() => lazyUpdateQuantity(_quantity + 1)}
+				disabled={isUpdating || _quantity >= 99}
+				onClick={() => lazyUpdateQuantity(Math.min(_quantity + 1, 99))}
 			>
 				+
 			</button>

@@ -3,7 +3,7 @@ import { CheckoutLineItem } from "shopify-buy";
 import { FaTimes } from "react-icons/fa";
 import { css, keyframes } from "@emotion/core";
 import { numberFotmatter } from "../../utils/helpers";
-import QuantityControl from "../quantity-control";
+import QuantityControl from "./quantity-control";
 
 const bounceOut = keyframes`
 	2% {

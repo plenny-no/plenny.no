@@ -42,7 +42,8 @@ const wrapper = css`
 		flex: 1;
 		width: calc(100vw - 30px);
 		max-width: 500px;
-		overflow-x: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 
 		& > p {
 			margin: 1rem;
