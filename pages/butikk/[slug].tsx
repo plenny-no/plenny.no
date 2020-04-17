@@ -32,7 +32,7 @@ const wrapper = css`
 		width: 100%;
 
 		& > *:first-of-type {
-			margin-bottom: 2rem;
+			margin: 0 auto 2rem auto;
 		}
 
 		@media screen and (min-width: 1000px) {

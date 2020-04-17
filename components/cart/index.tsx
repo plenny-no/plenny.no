@@ -7,6 +7,7 @@ import { FaTimes } from "react-icons/fa";
 import { useCart } from "./hooks";
 import CartItem from "./cart-item";
 import { numberFotmatter } from "../../utils/helpers";
+import theme from "../../utils/theme";
 
 const wrapper = css`
 	height: 100%;
@@ -16,13 +17,11 @@ const wrapper = css`
 
 	& > header {
 		position: relative;
-		border-bottom: 1px solid lightgray;
-		box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
 
 		button {
 			position: absolute;
-			left: 0;
-			top: 0;
+			right: 0;
+			top: 5px;
 			font-size: 1.2rem;
 			padding: 0.5em 0.7em;
 			color: initial;
@@ -30,11 +29,21 @@ const wrapper = css`
 
 		h1 {
 			margin: 0;
-			padding: 1rem 0;
+			padding: 0.5rem;
 			width: 100%;
 			text-align: center;
 			font-size: 1.5rem;
 			color: firebrick;
+		}
+
+		p {
+			margin: 1rem;
+			font-size: 0.85rem;
+			text-align: center;
+			font-weight: bold;
+			background: ${theme.safron};
+			padding: 0.5rem 0;
+			margin: 0;
 		}
 	}
 
@@ -44,12 +53,18 @@ const wrapper = css`
 		max-width: 500px;
 		overflow-y: auto;
 		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
 
 		& > p {
 			margin: 1rem;
 			font-size: 0.85rem;
 			text-align: center;
 			font-weight: bold;
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		ul {
@@ -59,29 +74,32 @@ const wrapper = css`
 
 			li {
 				margin-bottom: 1rem;
+				padding-bottom: 1rem;
+				:not(:last-of-type) {
+					border-bottom: 1px solid #ddd;
+				}
 			}
 		}
 	}
 
 	& > footer {
-		border-top: 1px solid lightgray;
 		box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.1);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 1rem;
+		padding: 0.5rem 1rem;
 
 		div {
 			font-size: 0.65rem;
 			text-transform: uppercase;
 			color: darkgray;
-			margin-bottom: 0.5rem;
+			margin-top: 0.5rem;
 		}
 
 		h2 {
 			margin: 0 0 0.5rem 0;
-			font-size: 1.25rem;
+			font-size: 1.125rem;
 		}
 
 		a {
@@ -95,8 +113,13 @@ const wrapper = css`
 			font-size: 1rem;
 			text-align: center;
 			text-decoration: none;
+			cursor: pointer;
 		}
 	}
+`;
+
+const disabledLink = css`
+	cursor: not-allowed !important;
 `;
 
 type Props = {};
@@ -107,6 +130,8 @@ export const Cart: React.FC<Props> = () => {
 	const toggleOpen = (state: boolean) => () => setOpen(state);
 
 	const totalPrice = parseInt(checkout?.checkout.totalPriceV2.amount || "0");
+	const canCheckout =
+		checkout?.checkout.ready && checkout.checkout.lineItems.length > 0;
 
 	return (
 		<Drawer
@@ -121,13 +146,13 @@ export const Cart: React.FC<Props> = () => {
 						<FaTimes />
 					</Button>
 					<h1>Handlekurv</h1>
-				</header>
-				<article>
 					<p>
 						{totalPrice < 800
 							? `${800 - totalPrice} kr igjen til gratis frakt`
 							: "Hurra! Du får gratis frakt :)"}
 					</p>
+				</header>
+				<article>
 					{(!checkout || checkout.checkout.lineItems.length === 0) && (
 						<p>Du har ingen varer i handlekurven :(</p>
 					)}
@@ -148,12 +173,17 @@ export const Cart: React.FC<Props> = () => {
 				</article>
 				<footer>
 					<h2>
-						Totalt: <span>{numberFotmatter(totalPrice)},-</span>
+						Totalt <span>{numberFotmatter(totalPrice)},-</span>
 					</h2>
+					<a
+						href={checkout && canCheckout ? checkout.checkout.webUrl : "#"}
+						css={canCheckout ? null : disabledLink}
+					>
+						Gå til kassen
+					</a>
 					{totalPrice < 800 && (
 						<div>Frakt kommer i tillegg, beregnes i kassen</div>
 					)}
-					<a href={checkout?.checkout.webUrl || "#"}>Gå til kassen</a>
 				</footer>
 			</div>
 		</Drawer>

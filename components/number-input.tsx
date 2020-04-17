@@ -6,9 +6,11 @@ const wrapper = css`
 	& > button {
 		border: none;
 		background: none;
+		padding: 0;
+		width: 2rem;
+		height: 2rem;
 		border-top: 1px solid gray;
 		border-bottom: 1px solid gray;
-		padding: 0.2rem 0.8rem;
 		line-height: inherit;
 		cursor: pointer;
 		touch-action: manipulation;
@@ -27,6 +29,7 @@ const wrapper = css`
 
 		:disabled {
 			border-color: lightgray;
+			cursor: not-allowed;
 		}
 	}
 
@@ -37,8 +40,11 @@ const wrapper = css`
 		border-radius: 0;
 		appearance: none;
 		background: none;
-		padding: 0.2rem 0.5rem;
+		padding: 0;
 		width: 3rem;
+		height: 2rem;
+		font-size: 1rem;
+		cursor: text;
 
 		::-webkit-inner-spin-button,
 		::-webkit-outer-spin-button {
@@ -48,6 +54,7 @@ const wrapper = css`
 
 		:disabled {
 			border-color: lightgray;
+			cursor: not-allowed;
 		}
 	}
 `;

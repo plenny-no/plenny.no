@@ -16,7 +16,6 @@ const regularButton = css`
 	border-radius: 0.25rem;
 
 	:disabled {
-		opacity: 0.8;
 		cursor: not-allowed;
 	}
 `;
