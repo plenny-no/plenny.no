@@ -11,6 +11,7 @@ import useCheckout from "../utils/use-checkout";
 import { allowScrolling } from "../utils/scrolling";
 import Cart from "./cart";
 import { useCart } from "./cart/hooks";
+import Link from "./link";
 
 const container = css`
 	position: absolute;
@@ -62,13 +63,17 @@ const navigation = (visible: boolean) => css`
 		padding: 0;
 		width: 100%;
 		list-style: none;
-		display: flex;
-		flex-direction: column;
 		text-align: center;
 
 		li {
 			margin: 1em;
 			font-size: 1.8rem;
+			display: inline-block;
+
+			:first-of-type {
+				display: block;
+				font-size: 3rem;
+			}
 		}
 	}
 `;
@@ -152,6 +157,9 @@ const Header: React.FC<Props> = (props) => {
 			</section>
 			<nav css={navigation(showNavigation)}>
 				<ul>
+					<li>
+						<Link href="/butikk">Butikk</Link>
+					</li>
 					{config.navigation.map((link) => {
 						return (
 							<li key={link._key}>
