@@ -3,6 +3,8 @@ import { css } from "@emotion/core";
 
 const wrapper = css`
 	user-select: none;
+	display: flex;
+
 	& > button {
 		border: none;
 		background: none;

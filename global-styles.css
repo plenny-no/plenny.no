@@ -44,13 +44,22 @@
   font-display: swap;
 }
 
+html {
+  font-size: 16px;
+}
+
+@media screen and (min-width: 450px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   font-family: Lato, sans-serif;
-  font-size: 18px;
   line-height: 1.5;
 }
 

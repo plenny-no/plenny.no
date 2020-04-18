@@ -4,6 +4,7 @@ import BlockContentToReact from "@sanity/block-content-to-react";
 import { SanityCallToAction } from "../../sanity/models";
 import { urlFor } from "../../sanity";
 import SanityLink from "../sanity-link";
+import PortableText from "../portable-text";
 
 const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 	display: grid;
@@ -55,7 +56,7 @@ const CallToAction: React.FC<Props> = (props) => {
 			</picture>
 			<section>
 				<h1>{content.title}</h1>
-				<BlockContentToReact blocks={content.text} />
+				<PortableText blocks={content.text} />
 				{content.link && <SanityLink link={content.link} />}
 			</section>
 		</article>

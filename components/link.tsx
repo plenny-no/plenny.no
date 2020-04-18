@@ -41,7 +41,13 @@ const Link: React.FC<Props> = (props) => {
 
 	if (/^(https?|tel|mailto):/.test(url)) {
 		return (
-			<a css={link} href={url} {...rest}>
+			<a
+				css={link}
+				href={url}
+				target="_blank"
+				rel="noopener noreferrer"
+				{...rest}
+			>
 				{children}
 			</a>
 		);

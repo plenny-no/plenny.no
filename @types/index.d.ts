@@ -10,6 +10,10 @@ declare module "@sanity/block-content-to-react" {
 
 	const content: React.FC<{
 		blocks: SanityObjectArray<SanityBlockContent>;
+		serializers: {
+			marks: { [key: string]: React.FC<any> };
+			types: { [key: string]: React.FC<any> };
+		};
 	}>;
 
 	export default content;

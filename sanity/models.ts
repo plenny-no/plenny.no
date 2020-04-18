@@ -145,3 +145,21 @@ export type SanityConfig = {
 		}
 	>;
 };
+
+export type SanityDataTable = SanityObject<
+	"dataTable",
+	{
+		columnHeader?: boolean;
+		rowHeader?: boolean;
+		data?: {
+			rows?: SanityObjectArray<
+				SanityObject<
+					"row",
+					{
+						cells?: string[];
+					}
+				>
+			>;
+		};
+	}
+>;

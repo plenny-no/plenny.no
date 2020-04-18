@@ -10,6 +10,26 @@ import {
 const sectionsQuery = `
 	sections[] {
 		...,
+		_type == "textArea" => {
+			...,
+			text[] {
+				...,
+				_type == "illustration" => {
+					...,
+					content {
+						...,
+						asset->
+					}
+				},
+				markDefs[] {
+					...,
+					_type == "internalLink" => {
+						...,
+						url->
+					}
+				}
+			}
+		},
 		_type == "callToAction" => {
 			...,
 			link {
