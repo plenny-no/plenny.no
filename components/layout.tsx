@@ -1,6 +1,9 @@
 import React from "react";
 import Header from "./header";
 import { css } from "@emotion/core";
+import Head from "next/head";
+import { SanityConfig } from "../sanity/models";
+import { ConfigProvider } from "../utils/use-config";
 
 const wrapper = css`
 	display: flex;
@@ -30,21 +33,28 @@ const space = css`
 `;
 
 type Props = {
+	title: string;
+	config: SanityConfig;
 	noSpace?: boolean;
 };
 
 const Layout: React.FC<Props> = (props) => {
-	const { noSpace, children } = props;
+	const { title, config, noSpace, children } = props;
 
 	const spacer = noSpace ? null : <div css={space} />;
 
 	return (
-		<div css={wrapper}>
-			<Header css={header} />
-			{spacer}
-			<main css={main}>{children}</main>
-			<footer css={footer}>PLENNY ANS</footer>
-		</div>
+		<ConfigProvider value={config}>
+			<Head>
+				<title>{title} | Plenny.no</title>
+			</Head>
+			<div css={wrapper}>
+				<Header css={header} />
+				{spacer}
+				<main css={main}>{children}</main>
+				<footer css={footer}>PLENNY ANS</footer>
+			</div>
+		</ConfigProvider>
 	);
 };
 

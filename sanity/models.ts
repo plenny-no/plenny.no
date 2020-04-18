@@ -14,7 +14,8 @@ export type SanityInternalLink = SanityObject<
 		url:
 			| SanityDocument<"page", { slug: { current: string } }>
 			| SanityDocument<"frontPage", {}>
-			| SanityDocument<"store", {}>;
+			| SanityDocument<"store", {}>
+			| SanityDocument<"article", { slug: { current: string } }>;
 	}
 >;
 
@@ -118,11 +119,22 @@ export type SanityFrontPage = SanityDocument<
 >;
 
 export type SanityPage = SanityDocument<
-	"frontPage",
+	"page",
 	{
 		title: string;
 		slug: { current: string };
 		sections: SanityObjectArray<SanitySection>;
+	}
+>;
+
+export type SanityArticle = SanityDocument<
+	"article",
+	{
+		title: string;
+		slug: { current: string };
+		blurb: SanityBlockContent;
+		image: SanityIllustration;
+		content: SanityTextArea;
 	}
 >;
 

@@ -59,20 +59,21 @@ const navigation = (visible: boolean) => css`
 	padding-top: 5rem;
 
 	& > ul {
-		margin: 0;
+		margin: 2rem 0 0 0;
 		padding: 0;
 		width: 100%;
 		list-style: none;
 		text-align: center;
 
 		li {
-			margin: 1em;
+			margin: 1rem;
 			font-size: 1.8rem;
 			display: inline-block;
 
-			:first-of-type {
+			:nth-of-type(-n + 2) {
 				display: block;
 				font-size: 3rem;
+				margin-bottom: 2rem;
 			}
 		}
 	}
@@ -159,6 +160,9 @@ const Header: React.FC<Props> = (props) => {
 				<ul>
 					<li>
 						<Link href="/butikk">Butikk</Link>
+					</li>
+					<li>
+						<Link href="/blogg">Blogg</Link>
 					</li>
 					{config.navigation.map((link) => {
 						return (

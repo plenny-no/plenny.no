@@ -1,8 +1,6 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
 import Section from "../components/sections";
-import { ConfigProvider } from "../utils/use-config";
 import { fetchConfig, fetchPage, fetchPagePaths } from "../sanity/queries";
 import { SanityPage, SanityConfig } from "../sanity/models";
 import Layout from "../components/layout";
@@ -16,16 +14,11 @@ const Page: React.FC<Props> = (props) => {
 	const { page, config } = props;
 
 	return (
-		<ConfigProvider value={config}>
-			<Head>
-				<title>{page.title} | Plenny.no</title>
-			</Head>
-			<Layout>
-				{(page.sections || []).map((section) => (
-					<Section key={section._key} section={section} />
-				))}
-			</Layout>
-		</ConfigProvider>
+		<Layout config={config} title={page.title}>
+			{(page.sections || []).map((section) => (
+				<Section key={section._key} section={section} />
+			))}
+		</Layout>
 	);
 };
 

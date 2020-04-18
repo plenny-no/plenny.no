@@ -5,66 +5,120 @@ import {
 	SanityPage,
 	SanityStore,
 	SanityProduct,
+	SanityArticle,
 } from "./models";
 
-const sectionsQuery = `
-	sections[] {
+const textAreaSection = `
+	{
 		...,
-		_type == "textArea" => {
+		text[] {
 			...,
-			text[] {
+			_type == "illustration" => {
 				...,
-				_type == "illustration" => {
+				content {
 					...,
-					content {
-						...,
-						asset->
-					}
-				},
-				markDefs[] {
-					...,
-					_type == "internalLink" => {
-						...,
-						url->
-					}
+					asset->
 				}
-			}
-		},
-		_type == "callToAction" => {
-			...,
-			link {
-				...,
-				url->
 			},
-			image {
+			markDefs[] {
 				...,
-				asset->
-			}
-		},
-		_type == "advertisement" => {
-			...,
-			products[]-> {
-				...,
-				images[] {
+				_type == "internalLink" => {
 					...,
-					asset->
-				},
-				variants[]->
-			}
-		},
-		_type == "productList" => {
-			...,
-			products[]-> {
-				...,
-				images[] {
-					...,
-					asset->
-				},
-				variants[]->
+					url->
+				}
 			}
 		}
 	}
 `;
+
+const callToActionSection = `
+	{
+		...,
+		link {
+			...,
+			url->
+		},
+		image {
+			...,
+			asset->
+		}
+	}
+`;
+
+const advertisementSection = `
+	{
+		...,
+		products[]-> {
+			...,
+			images[] {
+				...,
+				asset->
+			},
+			variants[]->
+		}
+	}
+`;
+
+const productListSection = `
+	{
+		...,
+		products[]-> {
+			...,
+			images[] {
+				...,
+				asset->
+			},
+			variants[]->
+		}
+	}
+`;
+
+const sectionsQuery = `
+	sections[] {
+		...,
+		_type == "textArea" => ${textAreaSection},
+		_type == "callToAction" => ${callToActionSection},
+		_type == "advertisement" => ${advertisementSection},
+		_type == "productList" => ${productListSection}
+	}
+`;
+
+export async function fetchArticlePaths() {
+	return await sanity.fetch<Pick<SanityArticle, "slug">[]>(
+		`*[_type == "article"] {slug}`
+	);
+}
+
+export async function fetchArticle(slug: string) {
+	return await sanity.fetch<SanityArticle>(
+		`
+		*[_type == "article" && slug.current == "${slug}"]
+		| order(_updatedAt desc)
+		[0] {
+			...,
+			image {
+				...,
+				asset->
+			},
+			content ${textAreaSection}
+		}
+		`
+	);
+}
+
+export async function fetchArticlePreviews() {
+	return await sanity.fetch<SanityArticle[]>(
+		`*[_type == "article"]
+		| order(_createdAt desc) {
+			...,
+			image {
+				...,
+				asset->
+			},
+			content ${textAreaSection}
+		}`
+	);
+}
 
 export async function fetchConfig() {
 	return await sanity.fetch<SanityConfig>(

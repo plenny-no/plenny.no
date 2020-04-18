@@ -26,7 +26,7 @@ class CustomDocument extends Document {
 					<link rel="manifest" href="/site.webmanifest" />
 					<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b22222" />
 					<link
-						href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+						href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Proza+Libre:wght@600&display=swap"
 						rel="stylesheet"
 					/>
 					<meta name="apple-mobile-web-app-title" content="Plenny" />

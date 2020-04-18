@@ -63,6 +63,15 @@ body {
   line-height: 1.5;
 }
 
+h1, h2 {
+  font-family: "Proza Libre", sans-serif;
+  font-weight: 600;
+}
+
+h3, h4 {
+  font-weight: bold;
+}
+
 img {
   border-radius: 0.25rem;
 }

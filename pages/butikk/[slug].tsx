@@ -7,7 +7,6 @@ import {
 	fetchProductPaths,
 } from "../../sanity/queries";
 import { SanityConfig, SanityProduct } from "../../sanity/models";
-import { ConfigProvider } from "../../utils/use-config";
 import TextArea from "../../components/sections/text-area";
 import { urlFor } from "../../sanity";
 import { css } from "@emotion/core";
@@ -237,82 +236,80 @@ const Butikk: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<ConfigProvider value={config}>
-			<Layout>
-				<article css={wrapper}>
-					<h1>{product.title}</h1>
-					<div>
-						<Slider css={slider} {...settings}>
-							{images.map((image) => (
-								<div key={image.key}>
-									<picture>
-										<source
-											srcSet={`${image.regular.main} 1x`}
-											type="image/webp"
+		<Layout config={config} title={product.title}>
+			<article css={wrapper}>
+				<h1>{product.title}</h1>
+				<div>
+					<Slider css={slider} {...settings}>
+						{images.map((image) => (
+							<div key={image.key}>
+								<picture>
+									<source
+										srcSet={`${image.regular.main} 1x`}
+										type="image/webp"
+									/>
+									<img src={image.regular.fallback} alt={image?.alt} />
+								</picture>
+							</div>
+						))}
+					</Slider>
+					<section>
+						<p>Velg det du vil ha (ta gjerne fire, ta åtte, ta alle)</p>
+						<ul>
+							{product.variants.map((variant) => {
+								const value = quantities[variant.storefrontId];
+								const handleChange = (quantity: number) =>
+									setQuantity(variant.storefrontId, quantity);
+								const handleBlur = () => {
+									if (isNaN(value)) {
+										setQuantity(variant.storefrontId, 0);
+									} else if (value > 99) {
+										setQuantity(variant.storefrontId, 99);
+									} else if (value < 0) {
+										setQuantity(variant.storefrontId, 0);
+									}
+								};
+								const handleIncrease = () =>
+									setQuantity(variant.storefrontId, value + 1);
+								const handleDecrease = () =>
+									setQuantity(variant.storefrontId, value - 1);
+								return (
+									<li key={variant._id}>
+										<span>{variant.title}</span>
+										<NumberInput
+											value={value}
+											min={0}
+											max={99}
+											onBlur={handleBlur}
+											onChange={handleChange}
+											onIncrease={handleIncrease}
+											onDecrease={handleDecrease}
+											disabled={addingToCart}
 										/>
-										<img src={image.regular.fallback} alt={image?.alt} />
-									</picture>
-								</div>
-							))}
-						</Slider>
-						<section>
-							<p>Velg det du vil ha (ta gjerne fire, ta åtte, ta alle)</p>
-							<ul>
-								{product.variants.map((variant) => {
-									const value = quantities[variant.storefrontId];
-									const handleChange = (quantity: number) =>
-										setQuantity(variant.storefrontId, quantity);
-									const handleBlur = () => {
-										if (isNaN(value)) {
-											setQuantity(variant.storefrontId, 0);
-										} else if (value > 99) {
-											setQuantity(variant.storefrontId, 99);
-										} else if (value < 0) {
-											setQuantity(variant.storefrontId, 0);
-										}
-									};
-									const handleIncrease = () =>
-										setQuantity(variant.storefrontId, value + 1);
-									const handleDecrease = () =>
-										setQuantity(variant.storefrontId, value - 1);
-									return (
-										<li key={variant._id}>
-											<span>{variant.title}</span>
-											<NumberInput
-												value={value}
-												min={0}
-												max={99}
-												onBlur={handleBlur}
-												onChange={handleChange}
-												onIncrease={handleIncrease}
-												onDecrease={handleDecrease}
-												disabled={addingToCart}
-											/>
-										</li>
-									);
-								})}
-							</ul>
-							<p>
-								Totalt:{" "}
-								<span>
-									{numberFotmatter(totalPrice)}
-									,-
-								</span>
-							</p>
-							<p>PS: Alle ordre over 800 får gratis frakt ;)</p>
-							<Button
-								primary
-								disabled={checkout === null || totalPrice <= 0 || addingToCart}
-								onClick={addToCart}
-							>
-								Legg i handlekurven
-							</Button>
-						</section>
-					</div>
-					{product.description && <TextArea content={product.description} />}
-				</article>
-			</Layout>
-		</ConfigProvider>
+									</li>
+								);
+							})}
+						</ul>
+						<p>
+							Totalt:{" "}
+							<span>
+								{numberFotmatter(totalPrice)}
+								,-
+							</span>
+						</p>
+						<p>PS: Alle ordre over 800 får gratis frakt ;)</p>
+						<Button
+							primary
+							disabled={checkout === null || totalPrice <= 0 || addingToCart}
+							onClick={addToCart}
+						>
+							Legg i handlekurven
+						</Button>
+					</section>
+				</div>
+				{product.description && <TextArea content={product.description} />}
+			</article>
+		</Layout>
 	);
 };
 
