@@ -1,5 +1,6 @@
 import React from "react";
 import { AppProps } from "next/app";
+import { DefaultSeo } from "next-seo";
 import { CheckoutProvider } from "../utils/use-checkout";
 import { CartProvider } from "../components/cart/hooks";
 
@@ -17,6 +18,17 @@ const App: React.FC<AppProps> = (props) => {
 			domain="plenny-no.myshopify.com"
 		>
 			<CartProvider>
+				<DefaultSeo
+					titleTemplate="%s | plenny.no"
+					canonical="https://plenny.no"
+					description="Plennyshake er en vegansk 🌱og laktose-fri 🥛shake proppfull av vitaminer og mineraler 💪som inneholder alle næringstroffene du trenger i løpet av en dag."
+					openGraph={{
+						type: "website",
+						locale: "nb_NO",
+						url: "https//plenny.no",
+						site_name: "plenny.no", // eslint-disable-line @typescript-eslint/camelcase
+					}}
+				/>
 				<Component {...pageProps} />
 			</CartProvider>
 		</CheckoutProvider>

@@ -148,7 +148,11 @@ const Header: React.FC<Props> = (props) => {
 				</Button>
 				<NextLink href="/">
 					<a>
-						<img src="/logo.svg" css={logo} />
+						<img
+							src="/logo.svg"
+							alt="Plenny skrevet på snei i en frekk og leken font"
+							css={logo}
+						/>
 					</a>
 				</NextLink>
 				<Button css={cartButton} onClick={toggleCart(true)}>
