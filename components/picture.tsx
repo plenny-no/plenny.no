@@ -7,10 +7,10 @@ const wrapper = (aspectRatio: number) => css`
 	width: 100%;
 	margin: 0;
 
-	& > section {
+	& > section#plenny-image-conteiner {
 		position: relative;
 		width: 100%;
-		padding-top: calc(100% / ${aspectRatio});
+		padding: calc(100% / ${aspectRatio}) 0 0 0;
 
 		img {
 			position: absolute;
@@ -56,7 +56,7 @@ const Picture: React.FC<Props> = (props) => {
 
 	return (
 		<figure css={wrapper(aspectRatio)} className={className}>
-			<section>
+			<section id="plenny-image-conteiner">
 				<picture>
 					{widths.map((width, index) => {
 						const image = src

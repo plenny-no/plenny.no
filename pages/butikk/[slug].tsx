@@ -53,7 +53,7 @@ const wrapper = css`
 			}
 		}
 
-		section {
+		& > section {
 			width: 100%;
 			margin: 2rem auto 0 auto;
 			padding: 2rem 1rem;
