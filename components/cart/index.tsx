@@ -100,6 +100,7 @@ const wrapper = css`
 		h2 {
 			margin: 0 0 0.5rem 0;
 			font-size: 1.125rem;
+			font-family: Lato, sans-serif;
 		}
 
 		a {

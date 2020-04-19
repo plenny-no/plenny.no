@@ -71,6 +71,11 @@ const CartItem: React.FC<Props> = (props) => {
 	const [isRemoving, setIsRemoving] = React.useState(false);
 	const price = item.variant ? parseInt(item.variant.priceV2.amount, 10) : null;
 
+	const variantTitle =
+		item.variant?.title.toLowerCase() === "default title"
+			? undefined
+			: item.variant?.title;
+
 	const handleRemove = () => {
 		setIsRemoving(true);
 		removeItem();
@@ -80,7 +85,7 @@ const CartItem: React.FC<Props> = (props) => {
 		<article css={wrapper(isRemoving)}>
 			<header>
 				<h2>{item.title}</h2>
-				<h3>{item.variant?.title}</h3>
+				<h3>{variantTitle}</h3>
 				<span>{price && numberFotmatter(price)} kr per stykk</span>
 			</header>
 			<section>
