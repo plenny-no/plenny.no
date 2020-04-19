@@ -3815,6 +3815,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
 
+next-seo@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.4.0.tgz#490f1064e89af55043559459c9cd04220e4d651d"
+  integrity sha512-8ySgeXpntn4mdcyuDQo9A2ESes8hLZ/G+YwzIg5fLrK8CxqrAVCUoCxAO/BJZf1QgMddSDUDlKtlLJspJ89Jtg==
+
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -4465,13 +4470,6 @@ react-is@16.8.6:
 react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
-
-react-on-images-loaded@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/react-on-images-loaded/-/react-on-images-loaded-2.2.3.tgz#ab5b7b98dd9e0eb7fd67b01d714c505373f900e6"
-  integrity sha512-h+zXiv6RwfY1/0kix+x0bEI1CHXwlnfmwhB5jwpaaerRM6V6Ixf4JAXrM9PnPRu+6ZJZjJTDESCd+sUPJfqL/Q==
-  dependencies:
-    prop-types "^15.6.2"
 
 react-slick@^0.25.2:
   version "0.25.2"

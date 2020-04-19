@@ -19,6 +19,7 @@ const wrapper = (numProducts: number) => css`
 		display: grid;
 		justify-content: center;
 		grid-row-gap: 0.5rem;
+		grid-template-columns: 1fr;
 
 		@media screen and (min-width: 600px) {
 			grid-column-gap: 2rem;

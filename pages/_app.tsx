@@ -1,12 +1,12 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { CheckoutProvider } from "../utils/use-checkout";
+import { CartProvider } from "../components/cart/hooks";
 
 import "normalize.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../global-styles.css";
-import { CartProvider } from "../components/cart/hooks";
 
 const App: React.FC<AppProps> = (props) => {
 	const { Component, pageProps } = props;
