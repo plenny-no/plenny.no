@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import theme from "../utils/theme";
 import { urlFor } from "../sanity";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { SanityReference, SanityImageAsset } from "../sanity/utils";
 
 const hero = css`
 	height: 80vh;
@@ -20,7 +20,7 @@ const hero = css`
 `;
 
 type Props = {
-	image: SanityImageSource;
+	image: SanityReference<SanityImageAsset>;
 	alt: string;
 };
 
@@ -33,7 +33,7 @@ const Hero: React.FC<Props> = (props) => {
 	return (
 		<article css={hero}>
 			<picture>
-				<source srcSet={`${imageUrl} 1x`} type="image/webp" />
+				<source srcSet={imageUrl} type="image/webp" />
 				<img src={fallbackImageUrl} alt={alt} />
 			</picture>
 		</article>

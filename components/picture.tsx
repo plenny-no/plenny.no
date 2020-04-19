@@ -1,13 +1,24 @@
-import React from "react";
 import { css } from "@emotion/core";
+import React from "react";
+import { urlFor } from "../sanity";
+import { SanityImageAsset, SanityReference } from "../sanity/utils";
 
-const wrapper = css`
+const wrapper = (aspectRatio: number) => css`
 	width: 100%;
 	margin: 0;
 
-	& img {
+	& > section {
+		position: relative;
 		width: 100%;
-		border-radius: 0.25rem;
+		padding-top: calc(100% / ${aspectRatio});
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 	& > figcaption {
@@ -18,25 +29,94 @@ const wrapper = css`
 	}
 `;
 
+export const lqipBackground = (src: string) => css`
+	background: url("${src}") no-repeat;
+	background-size: cover;
+`;
+
 type Props = {
-	src: string;
+	image: SanityReference<SanityImageAsset>;
+	widths: [number, ...number[]];
+	aspectRatio: number;
 	alt: string;
 	caption?: string;
 	className?: string;
 };
 
-const Pricutre: React.FC<Props> = (props) => {
-	const { src, alt, caption, className, children } = props;
+const Picture: React.FC<Props> = (props) => {
+	const { widths, aspectRatio, alt, caption, className } = props;
+	const src = urlFor(props.image);
+
+	const maxWidth = widths.splice(-1)[0];
+
+	const lqip =
+		props.image._type === "sanity.imageAsset"
+			? props.image.metadata.lqip
+			: null;
 
 	return (
-		<figure css={wrapper} className={className}>
-			<picture>
-				{children}
-				<img src={src} alt={alt} />
-			</picture>
+		<figure css={wrapper(aspectRatio)} className={className}>
+			<section>
+				<picture>
+					{widths.map((width, index) => {
+						const image = src
+							.fit("min")
+							.width(width)
+							.height(Math.round(width / aspectRatio));
+
+						return (
+							<React.Fragment key={index}>
+								<source
+									srcSet={image.format("webp").url() || ""}
+									type="image/webp"
+									media={`(max-width: ${width}px)`}
+								/>
+								<source
+									srcSet={image.url() || ""}
+									media={`(max-width: ${width}px)`}
+								/>
+							</React.Fragment>
+						);
+					})}
+					<source
+						srcSet={
+							src
+								.fit("min")
+								.width(maxWidth)
+								.height(Math.round(maxWidth / aspectRatio))
+								.format("webp")
+								.url() || ""
+						}
+						type="image/webp"
+						media={`(min-width: ${maxWidth}px)`}
+					/>
+					<source
+						srcSet={
+							src
+								.fit("min")
+								.width(maxWidth)
+								.height(Math.round(maxWidth / aspectRatio))
+								.url() || ""
+						}
+						media={`(min-width: ${maxWidth}px)`}
+					/>
+
+					<img
+						src={
+							src
+								.fit("min")
+								.width(maxWidth)
+								.height(Math.round(maxWidth / aspectRatio))
+								.url() || ""
+						}
+						alt={alt}
+						css={lqip && lqipBackground(lqip)}
+					/>
+				</picture>
+			</section>
 			{caption && <figcaption>{caption}</figcaption>}
 		</figure>
 	);
 };
 
-export default Pricutre;
+export default Picture;

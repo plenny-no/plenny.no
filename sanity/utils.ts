@@ -34,6 +34,59 @@ export type SanityDocument<T extends string = string, R = {}> = R & {
 
 export type SanityImage = SanityObject<"image", SanityImageObject>;
 
+export type SanityImagePaletteSwatch = SanityObject<
+	"sanity.imagePaletteSwatch",
+	{
+		background: string;
+		foreground: string;
+		population: number;
+		title: string;
+	}
+>;
+
+export type SanityImageAsset = SanityDocument<
+	"sanity.imageAsset",
+	{
+		assetId: string;
+		extension: string;
+		metadata: SanityObject<
+			"sanity.imageMetadata",
+			{
+				dimensions: SanityObject<
+					"sanity.imageDimensions",
+					{
+						aspectRatio: number;
+						height: number;
+						width: number;
+					}
+				>;
+				hasAlpha: boolean;
+				isOpaque: boolean;
+				lqip: string;
+				palette: SanityObject<
+					"sanity.imagePalette",
+					{
+						darkMuted: SanityImagePaletteSwatch;
+						darkVibrant: SanityImagePaletteSwatch;
+						dominant: SanityImagePaletteSwatch;
+						lightMuted: SanityImagePaletteSwatch;
+						lightVibrant: SanityImagePaletteSwatch;
+						muted: SanityImagePaletteSwatch;
+						vibrant: SanityImagePaletteSwatch;
+					}
+				>;
+			}
+		>;
+		mimeType: string;
+		originalFilename: string;
+		path: string;
+		sha1hash: string;
+		size: number;
+		uploadId: string;
+		url: string;
+	}
+>;
+
 export type SanitySlug = SanityObject<"slug", { current: string }>;
 
 export type SanityBlockContent = SanityObject<"block", object>;

@@ -8,7 +8,6 @@ import {
 } from "../../sanity/queries";
 import { SanityConfig, SanityProduct } from "../../sanity/models";
 import TextArea from "../../components/sections/text-area";
-import { urlFor } from "../../sanity";
 import { css } from "@emotion/core";
 import Slider from "react-slick";
 import useCheckout from "../../utils/use-checkout";
@@ -16,11 +15,16 @@ import Button from "../../components/button";
 import NumberInput from "../../components/number-input";
 import { numberFotmatter } from "../../utils/helpers";
 import { useCart } from "../../components/cart/hooks";
+import Picture from "../../components/picture";
 
 const wrapper = css`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	.slick-list {
+		margin-bottom: 0.75rem;
+	}
 
 	& > h1 {
 		padding: 1rem;
@@ -30,10 +34,6 @@ const wrapper = css`
 	& > div {
 		width: 100%;
 
-		& > *:first-of-type {
-			margin: 0 auto 2rem auto;
-		}
-
 		@media screen and (min-width: 1000px) {
 			display: grid;
 			grid-template-columns: 1fr auto;
@@ -41,7 +41,7 @@ const wrapper = css`
 			grid-column-gap: 3rem;
 			justify-items: end;
 			max-width: 1000px;
-			padding: 2rem;
+			padding: 0 2rem;
 			justify-items: start;
 
 			& > *:first-of-type {
@@ -53,13 +53,9 @@ const wrapper = css`
 			}
 		}
 
-		& > article {
-			padding: 1rem;
-			max-width: 800px;
-		}
-
 		section {
 			width: 100%;
+			margin: 2rem auto 0 auto;
 			padding: 2rem 1rem;
 			background: #f9c22e;
 			display: flex;
@@ -121,22 +117,18 @@ const wrapper = css`
 			}
 		}
 	}
-
-	& img {
-		padding: 0;
-		width: 100%;
-		max-width: 500px;
-		height: auto;
-
-		@media screen and (max-width: 500px) {
-			border-radius: 0;
-		}
-	}
 `;
 
 const slider = css`
 	max-width: 500px;
 	width: 100%;
+	margin: 0 auto;
+
+	.slick-slide img {
+		@media screen and (max-width: 500px) {
+			border-radius: 0;
+		}
+	}
 
 	.slick-dots {
 		position: relative;
@@ -175,20 +167,6 @@ const Butikk: React.FC<Props> = (props) => {
 	const setQuantity = (id: string, quantity: number) =>
 		setQuantities((current) => ({ ...current, [id]: quantity }));
 
-	const images = (product.images || []).map((image) => ({
-		key: image._key,
-		caption: image.caption,
-		alt: image.alt,
-		regular: {
-			main: urlFor(image).format("webp").maxWidth(500).url() || "",
-			fallback: urlFor(image).maxWidth(500).url() || "",
-		},
-		preview: {
-			main: urlFor(image).format("webp").maxWidth(50).url() || "",
-			fallback: urlFor(image).maxWidth(50).url() || "",
-		},
-	}));
-
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -200,13 +178,12 @@ const Butikk: React.FC<Props> = (props) => {
 		customPaging(i: number) {
 			return (
 				<a>
-					<picture>
-						<source
-							srcSet={`${images[i]?.preview.main} 1x`}
-							type="image/webp"
-						/>
-						<img src={images[i]?.preview.fallback} alt={images[i]?.alt} />
-					</picture>
+					<Picture
+						image={product.images[i].asset}
+						widths={[50]}
+						aspectRatio={1}
+						alt={product.images[i].alt}
+					/>
 				</a>
 			);
 		},
@@ -241,16 +218,14 @@ const Butikk: React.FC<Props> = (props) => {
 				<h1>{product.title}</h1>
 				<div>
 					<Slider css={slider} {...settings}>
-						{images.map((image) => (
-							<div key={image.key}>
-								<picture>
-									<source
-										srcSet={`${image.regular.main} 1x`}
-										type="image/webp"
-									/>
-									<img src={image.regular.fallback} alt={image?.alt} />
-								</picture>
-							</div>
+						{(product.images || []).map((image) => (
+							<Picture
+								key={image._key}
+								image={image.asset}
+								widths={[340, 400, 500]}
+								aspectRatio={1}
+								alt={image.alt}
+							/>
 						))}
 					</Slider>
 					<section>

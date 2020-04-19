@@ -16,7 +16,7 @@ const Home: React.FC<Props> = (props) => {
 
 	return (
 		<Layout title="Hjem" config={config} noSpace>
-			<Hero image={frontPage.hero} alt={frontPage.hero.alt} />
+			<Hero image={frontPage.hero.asset} alt={frontPage.hero.alt} />
 			{frontPage.sections.map((section) => (
 				<Section key={section._key} section={section} />
 			))}

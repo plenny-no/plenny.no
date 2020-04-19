@@ -4466,6 +4466,13 @@ react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
 
+react-on-images-loaded@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-on-images-loaded/-/react-on-images-loaded-2.2.3.tgz#ab5b7b98dd9e0eb7fd67b01d714c505373f900e6"
+  integrity sha512-h+zXiv6RwfY1/0kix+x0bEI1CHXwlnfmwhB5jwpaaerRM6V6Ixf4JAXrM9PnPRu+6ZJZjJTDESCd+sUPJfqL/Q==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-slick@^0.25.2:
   version "0.25.2"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.25.2.tgz#56331b67d47d8bcfe2dceb6acab1c8fd5bd1f6bc"

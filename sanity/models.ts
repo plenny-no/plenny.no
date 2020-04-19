@@ -4,8 +4,8 @@ import {
 	SanityObjectArray,
 	SanitySlug,
 	SanityReference,
+	SanityImageAsset,
 } from "./utils";
-import { SanityAsset } from "@sanity/image-url/lib/types/types";
 
 export type SanityInternalLink = SanityObject<
 	"internalLink",
@@ -32,7 +32,7 @@ export type SanityIllustration = SanityObject<
 	{
 		alt: string;
 		caption?: string;
-		asset: SanityAsset;
+		asset: SanityImageAsset;
 	}
 >;
 

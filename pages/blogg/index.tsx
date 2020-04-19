@@ -1,15 +1,9 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import {
-	fetchConfig,
-	fetchArticle,
-	fetchArticlePreviews,
-} from "../../sanity/queries";
+import { fetchConfig, fetchArticlePreviews } from "../../sanity/queries";
 import { SanityConfig, SanityArticle } from "../../sanity/models";
 import Layout from "../../components/layout";
-import TextArea from "../../components/sections/text-area";
 import { css } from "@emotion/core";
-import CallToAction from "../../components/sections/call-to-action";
 import ArticlePreview from "../../components/article-preview";
 
 const header = css`

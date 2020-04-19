@@ -1,8 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { SanityProduct } from "../sanity/models";
-import { urlFor } from "../sanity";
 import NextLink from "next/link";
+import Picture from "./picture";
 
 const articleWrapper = css`
 	display: flex;
@@ -12,11 +12,6 @@ const articleWrapper = css`
 	& a {
 		text-decoration: none;
 		color: inherit;
-	}
-
-	& img {
-		width: 100%;
-		height: auto;
 	}
 
 	& h2 {
@@ -43,17 +38,17 @@ const ProductPreview: React.FC<Props> = (props) => {
 		product: { defaultPrice, title, images = [], slug },
 	} = props;
 
-	const imageUrl = urlFor(images[0]).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(images[0]).maxWidth(500).url() || "";
-
 	return (
 		<article css={articleWrapper}>
 			<NextLink href="/butikk/[slug]" as={`/butikk/${slug.current}`}>
 				<a>
-					<picture>
-						<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-						<img src={fallbackImageUrl} alt={images[0]?.alt} />
-					</picture>
+					<Picture
+						image={images[0].asset}
+						widths={[340, 400, 500]}
+						aspectRatio={1}
+						alt={images[0]?.alt || ""}
+						caption={images[0]?.caption}
+					/>
 					<h2>{title}</h2>
 					<h3>{defaultPrice}</h3>
 				</a>

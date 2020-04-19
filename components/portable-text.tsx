@@ -4,7 +4,6 @@ import { SanityObjectArray, SanityBlockContent } from "../sanity/utils";
 import Link from "./link";
 import Picture from "./picture";
 import { SanityInternalLink } from "../sanity/models";
-import { urlFor } from "../sanity";
 import { css } from "@emotion/core";
 import DataTable from "./data-table";
 
@@ -36,8 +35,6 @@ const serializers = {
 			const {
 				node: { content: image },
 			} = props;
-			const imageUrl = urlFor(image).format("webp").maxWidth(500).url() || "";
-			const fallbackImageUrl = urlFor(image).maxWidth(500).url() || "";
 
 			return (
 				<Picture
@@ -45,12 +42,12 @@ const serializers = {
 						max-width: 500px;
 						margin: 0 auto;
 					`}
-					src={fallbackImageUrl}
+					image={image}
+					widths={[340, 400, 500]}
+					aspectRatio={1}
 					alt={image.alt}
 					caption={image.caption}
-				>
-					<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-				</Picture>
+				/>
 			);
 		},
 		dataTable: (props: any) => {

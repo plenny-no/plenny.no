@@ -1,13 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { SanityArticle } from "../sanity/models";
-import { urlFor } from "../sanity";
-import Pricutre from "./picture";
 import Link from "./link";
 import PortableText from "./portable-text";
 import { nb } from "date-fns/locale";
 import formatRelative from "date-fns/formatRelative";
 import { useInterval } from "../utils/use-interval";
+import Picture from "./picture";
 
 const wrapper = css`
 	display: grid;
@@ -62,19 +61,15 @@ const ArticlePreview: React.FC<Props> = (props) => {
 		10 * 60 * 1000
 	);
 
-	const imageUrl =
-		urlFor(article.image).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(article.image).maxWidth(500).url() || "";
-
 	return (
 		<article css={wrapper}>
-			<Pricutre
-				src={fallbackImageUrl}
+			<Picture
+				image={article.image.asset}
+				widths={[340, 380, 400, 450, 500]}
+				aspectRatio={1}
 				alt={article.image.alt}
 				caption={article.image.caption}
-			>
-				<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-			</Pricutre>
+			/>
 			<section>
 				<h1>{article.title}</h1>
 				<span>{date}</span>

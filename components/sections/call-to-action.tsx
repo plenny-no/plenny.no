@@ -1,10 +1,9 @@
 import React from "react";
 import { css } from "@emotion/core";
-import BlockContentToReact from "@sanity/block-content-to-react";
 import { SanityCallToAction } from "../../sanity/models";
-import { urlFor } from "../../sanity";
 import SanityLink from "../sanity-link";
 import PortableText from "../portable-text";
+import Picture from "../picture";
 
 const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 	display: grid;
@@ -23,11 +22,6 @@ const wrapper = (alignment: SanityCallToAction["imageAlignment"]) => css`
 		@media screen and (min-width: 750px) {
 			grid-row: ${alignment === "right" ? 0 : 1};
 		}
-
-		img {
-			width: 100%;
-			height: auto;
-		}
 	}
 
 	& > section {
@@ -44,16 +38,15 @@ type Props = {
 const CallToAction: React.FC<Props> = (props) => {
 	const { content } = props;
 
-	const imageUrl =
-		urlFor(content.image).format("webp").maxWidth(500).url() || "";
-	const fallbackImageUrl = urlFor(content.image).maxWidth(500).url() || "";
-
 	return (
 		<article css={wrapper(content.imageAlignment)}>
-			<picture>
-				<source srcSet={`${imageUrl} 1x`} type="image/webp" />
-				<img src={fallbackImageUrl} alt={content.image.alt} />
-			</picture>
+			<Picture
+				image={content.image.asset}
+				widths={[360, 400, 500]}
+				aspectRatio={1}
+				alt={content.image.alt}
+				caption={content.image.caption}
+			/>
 			<section>
 				<h1>{content.title}</h1>
 				<PortableText blocks={content.text} />
