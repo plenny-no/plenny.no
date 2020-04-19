@@ -33,7 +33,7 @@ const wrapper = css`
 			width: 100%;
 			text-align: center;
 			font-size: 1.5rem;
-			color: firebrick;
+			color: ${theme.firebrick};
 		}
 
 		p {
@@ -105,7 +105,7 @@ const wrapper = css`
 
 		a {
 			padding: 1rem 2rem;
-			background: firebrick;
+			background: ${theme.firebrick};
 			color: white;
 			border-radius: 0.3rem;
 			border: none;

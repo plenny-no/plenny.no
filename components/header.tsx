@@ -28,7 +28,7 @@ const header = css`
 	display: flex;
 	justify-content: space-between;
 	padding: 1rem;
-	color: firebrick;
+	color: ${theme.firebrick};
 	font-weight: bold;
 	background: transparent;
 	z-index: 10;

@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "@emotion/core";
+import theme from "../utils/theme";
 
 type Props = {
 	primary?: boolean;
@@ -9,7 +10,7 @@ const regularButton = css`
 	border: 0;
 	background: unset;
 	cursor: pointer;
-	color: firebrick;
+	color: ${theme.firebrick};
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 0.75em 1em;
@@ -22,7 +23,7 @@ const regularButton = css`
 
 const primaryButton = css`
 	${regularButton}
-	background: firebrick;
+	background: ${theme.firebrick};
 	color: white;
 `;
 

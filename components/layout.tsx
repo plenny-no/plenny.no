@@ -4,6 +4,7 @@ import { css } from "@emotion/core";
 import Head from "next/head";
 import { SanityConfig } from "../sanity/models";
 import { ConfigProvider } from "../utils/use-config";
+import theme from "../utils/theme";
 
 const wrapper = css`
 	display: flex;
@@ -21,7 +22,7 @@ const main = css`
 
 const footer = css`
 	min-height: 200px;
-	background: firebrick;
+	background: ${theme.firebrick};
 	color: floralwhite;
 	display: flex;
 	justify-content: center;
