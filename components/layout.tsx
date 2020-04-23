@@ -13,11 +13,13 @@ const wrapper = css`
 `;
 
 const header = css`
-	z-index: 1;
+	z-index: 10;
 `;
 
 const main = css`
 	flex: 1;
+	margin-top: 4rem;
+	background-color: white;
 `;
 
 const footer = css`
@@ -29,20 +31,13 @@ const footer = css`
 	align-items: center;
 `;
 
-const space = css`
-	height: 4rem;
-`;
-
 type Props = {
 	title: string;
 	config: SanityConfig;
-	noSpace?: boolean;
 };
 
 const Layout: React.FC<Props> = (props) => {
-	const { title, config, noSpace, children } = props;
-
-	const spacer = noSpace ? null : <div css={space} />;
+	const { title, config, children } = props;
 
 	return (
 		<ConfigProvider value={config}>
@@ -51,7 +46,6 @@ const Layout: React.FC<Props> = (props) => {
 			</Head>
 			<div css={wrapper}>
 				<Header css={header} />
-				{spacer}
 				<main css={main}>{children}</main>
 				<footer css={footer}>PLENNY ANS</footer>
 			</div>

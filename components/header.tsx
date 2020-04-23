@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { Router } from "next/dist/client/router";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import Button from "./button";
 import NextLink from "next/link";
 import theme from "../utils/theme";
@@ -14,52 +14,38 @@ import { useCart } from "./cart/hooks";
 import Link from "./link";
 
 const container = css`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	height: 4rem;
+	width: 100%;
+	background-color: ${theme.safron};
 `;
 
 const header = css`
-	position: relative;
+	height: 4rem;
 	max-width: 800px;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
-	padding: 1rem;
 	color: ${theme.firebrick};
 	font-weight: bold;
-	background: transparent;
-	z-index: 10;
+	font-size: 1.5rem;
 `;
 
 const logo = css`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	height: 3rem;
+	height: 100%;
+	padding: 0.75rem 0.5rem;
 `;
 
-const navigation = (visible: boolean) => css`
-	background-color: ${theme.safron};
-	position: fixed;
-	width: 100%;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 0;
-	transition: all 0.3s ease-in-out;
-	transform: translateY(${visible ? "0" : "-100vh"});
-	transform-origin: top center;
+const navigation = css`
+	height: calc(100vh - 4rem);
 	overflow: hidden;
+	transition: height 0.3s ease-in-out;
 	display: flex;
 	justify-content: center;
-	padding-top: 5rem;
 
 	& > ul {
-		margin: 2rem 0 0 0;
+		margin: 5vh 0.5rem;
 		padding: 0;
 		width: 100%;
 		list-style: none;
@@ -77,6 +63,10 @@ const navigation = (visible: boolean) => css`
 			}
 		}
 	}
+`;
+
+const navigationHidden = css`
+	height: 0;
 `;
 
 const cartButton = css`
@@ -144,7 +134,7 @@ const Header: React.FC<Props> = (props) => {
 			<Cart />
 			<section css={header}>
 				<Button onClick={toggleNavigation}>
-					{showNavigation ? "Lukk" : "Meny"}
+					{showNavigation ? <FaTimes /> : <FaBars />}
 				</Button>
 				<NextLink href="/">
 					<a>
@@ -160,7 +150,7 @@ const Header: React.FC<Props> = (props) => {
 					<span>{itemsInCart}</span>
 				</Button>
 			</section>
-			<nav css={navigation(showNavigation)}>
+			<nav css={[navigation, showNavigation ? undefined : navigationHidden]}>
 				<ul>
 					<li>
 						<Link href="/butikk">Butikk</Link>

@@ -16,24 +16,27 @@ const wrapper = css`
 	flex-direction: column;
 
 	& > header {
-		position: relative;
+		section {
+			height: 4rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
 
-		button {
-			position: absolute;
-			right: 0;
-			top: 5px;
-			font-size: 1.2rem;
-			padding: 0.5em 0.7em;
-			color: initial;
-		}
+			button {
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				font-size: 1.5rem;
+				color: initial;
+			}
 
-		h1 {
-			margin: 0;
-			padding: 0.5rem;
-			width: 100%;
-			text-align: center;
-			font-size: 1.5rem;
-			color: ${theme.firebrick};
+			h1 {
+				margin: 0;
+				font-size: 1.5rem;
+				color: ${theme.firebrick};
+			}
 		}
 
 		p {
@@ -143,10 +146,12 @@ export const Cart: React.FC<Props> = () => {
 		>
 			<div css={wrapper}>
 				<header>
-					<Button onClick={toggleOpen(false)}>
-						<FaTimes />
-					</Button>
-					<h1>Handlekurv</h1>
+					<section>
+						<h1>Handlekurv</h1>
+						<Button onClick={toggleOpen(false)}>
+							<FaTimes />
+						</Button>
+					</section>
 					<p>
 						{totalPrice < 800
 							? `${800 - totalPrice} kr igjen til gratis frakt`

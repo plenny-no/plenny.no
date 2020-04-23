@@ -8,7 +8,6 @@ const hero = css`
 	height: 80vh;
 	width: 100%;
 	background-color: ${theme.safron};
-	padding-top: 4rem;
 
 	picture > img {
 		width: 100%;

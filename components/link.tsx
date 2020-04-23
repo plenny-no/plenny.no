@@ -8,6 +8,7 @@ const link = css`
 	font-weight: bold;
 	text-decoration: none;
 	position: relative;
+	z-index: 1;
 
 	::after {
 		content: "";
