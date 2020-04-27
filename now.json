@@ -1,0 +1,6 @@
+{
+  "env": {
+    "SANITY_TOKEN": "@sanity_web_token",
+    "PREVIEW_TOKEN": "@preview_token"
+  }
+}

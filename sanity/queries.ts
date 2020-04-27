@@ -7,6 +7,7 @@ import {
 	SanityProduct,
 	SanityArticle,
 } from "./models";
+import { draftsDeduplicate } from "./utils";
 
 const textAreaSection = `
 	{
@@ -84,13 +85,13 @@ const sectionsQuery = `
 `;
 
 export async function fetchArticlePaths() {
-	return await sanity.fetch<Pick<SanityArticle, "slug">[]>(
+	return await sanity(false).fetch<Pick<SanityArticle, "slug">[]>(
 		`*[_type == "article"] {slug}`
 	);
 }
 
-export async function fetchArticle(slug: string) {
-	return await sanity.fetch<SanityArticle>(
+export async function fetchArticle(slug: string, preview = false) {
+	return await sanity(preview).fetch<SanityArticle>(
 		`
 		*[_type == "article" && slug.current == "${slug}"]
 		| order(_updatedAt desc)
@@ -106,9 +107,10 @@ export async function fetchArticle(slug: string) {
 	);
 }
 
-export async function fetchArticlePreviews() {
-	return await sanity.fetch<SanityArticle[]>(
-		`*[_type == "article"]
+export async function fetchArticlePreviews(preview = false) {
+	return await sanity(preview)
+		.fetch<SanityArticle[]>(
+			`*[_type == "article"]
 		| order(_createdAt desc) {
 			...,
 			image {
@@ -117,11 +119,12 @@ export async function fetchArticlePreviews() {
 			},
 			content ${textAreaSection}
 		}`
-	);
+		)
+		.then(draftsDeduplicate);
 }
 
-export async function fetchConfig() {
-	return await sanity.fetch<SanityConfig>(
+export async function fetchConfig(preview = false) {
+	return await sanity(preview).fetch<SanityConfig>(
 		`
 		*[_id in ["global-config", "drafts.global-config"]]
 		| order(_updatedAt desc)
@@ -149,8 +152,8 @@ export async function fetchConfig() {
 	);
 }
 
-export async function fetchFrontPage() {
-	return await sanity.fetch<SanityFrontPage>(
+export async function fetchFrontPage(preview = false) {
+	return await sanity(preview).fetch<SanityFrontPage>(
 		`
 		*[_id in ["global-front-page", "drafts.global-front-page"]]
 		| order(_updatedAt desc)
@@ -167,13 +170,13 @@ export async function fetchFrontPage() {
 }
 
 export async function fetchPagePaths() {
-	return await sanity.fetch<Pick<SanityPage, "slug">[]>(
+	return await sanity(false).fetch<Pick<SanityPage, "slug">[]>(
 		`*[_type == "page"] {slug}`
 	);
 }
 
-export async function fetchPage(slug: string) {
-	return await sanity.fetch<SanityPage>(
+export async function fetchPage(slug: string, preview = false) {
+	return await sanity(preview).fetch<SanityPage>(
 		`
 		*[_type == "page" && slug.current == "${slug}"]
 		| order(_updatedAt desc)
@@ -185,8 +188,8 @@ export async function fetchPage(slug: string) {
 	);
 }
 
-export async function fetchStore() {
-	return await sanity.fetch<SanityStore>(
+export async function fetchStore(preview = false) {
+	return await sanity(preview).fetch<SanityStore>(
 		`
 		*[_id in ["global-store", "drafts.global-store"]]
 		| order(_updatedAt desc)
@@ -199,13 +202,13 @@ export async function fetchStore() {
 }
 
 export async function fetchProductPaths() {
-	return await sanity.fetch<Pick<SanityProduct, "slug">[]>(
+	return await sanity(false).fetch<Pick<SanityProduct, "slug">[]>(
 		`*[_type == "product" && deleted != true] { slug }`
 	);
 }
 
-export async function fetchProduct(slug: string) {
-	return await sanity.fetch<SanityProduct>(
+export async function fetchProduct(slug: string, preview = false) {
+	return await sanity(preview).fetch<SanityProduct>(
 		`*[_type == "product" && slug.current == "${slug}"]
 		| order(_updatedAt desc)
 		[0] {

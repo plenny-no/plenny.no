@@ -1,5 +1,20 @@
 import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 
+export function draftsDeduplicate<T extends SanityDocument>(documents: T[]) {
+	const exlude: string[] = [];
+
+	documents.forEach((document) => {
+		if (document._id.startsWith("drafts.")) {
+			exlude.push(document._id.replace("drafts.", ""));
+		}
+	});
+
+	return documents.filter((document) => {
+		if (!exlude.includes(document._id)) return true;
+		return false;
+	});
+}
+
 export type SanityObject<T extends string, O extends object> = { _type: T } & O;
 
 // NB: Only use this when all elements within the array are sanity object (i.e.

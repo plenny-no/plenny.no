@@ -5,22 +5,27 @@ import {
 	SanityImageSource,
 } from "@sanity/image-url/lib/types/types";
 
-export const sanity = sanityClient({
+const options = {
 	projectId: "bxtjfvg8",
 	dataset: "production",
 	useCdn: false,
+};
+
+const client = sanityClient(options);
+const previewClient = sanityClient({
+	...options,
+	token: process.env.SANITY_TOKEN,
 });
 
-export const sanityWithCdn = sanityClient({
-	projectId: "bxtjfvg8",
-	dataset: "production",
-	useCdn: true,
-});
-
-const builder = imageUrlBuilder(sanityWithCdn as SanityClient);
+const builder = imageUrlBuilder(
+	sanityClient({
+		...options,
+		useCdn: true,
+	}) as SanityClient
+);
 
 export function urlFor(source: SanityImageSource) {
 	return builder.image(source);
 }
 
-export default sanity;
+export default (preview = false) => (preview ? previewClient : client);
