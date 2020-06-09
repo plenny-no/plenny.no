@@ -33,6 +33,12 @@ class CustomDocument extends Document {
 					<meta name="application-name" content="Plenny" />
 					<meta name="msapplication-TileColor" content="#f9c22e" />
 					<meta name="theme-color" content="#f9c22e" />
+					<script
+						async
+						defer
+						data-domain="plenny.no"
+						src="https://plausible.io/js/plausible.js"
+					/>
 				</Head>
 				<body>
 					<Main />
